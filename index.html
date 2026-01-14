@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduNusantara - Platform Pembelajaran Kelas 12</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">EduNusantara</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="matematika">Matematika</a></li>
+                <li><a href="#" class="nav-link" data-page="ppkn">PPKn</a></li>
+                <li><a href="#" class="nav-link" data-page="fun-games">Fun Games</a></li>
+                <li><a href="#" class="nav-link" data-page="profile">Profil</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Page -->
+        <section id="dashboard" class="page active">
+            <div class="welcome-banner">
+                <h1>Selamat Datang di EduNusantara</h1>
+                <p>Platform pembelajaran Kelas 12 yang menggabungkan Matematika, PPKn, dan Seni Budaya Indonesia</p>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <h3 id="total-progress">0%</h3>
+                        <p>Total Progress</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <h3 id="completed-courses">0/2</h3>
+                        <p>Course Selesai</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-info">
+                        <h3 id="total-score">0</h3>
+                        <p>Total Nilai</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="courses-grid">
+                <div class="course-card" data-course="matematika">
+                    <div class="course-header math-gradient">
+                        <span class="course-icon">🔢</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>Matematika Kelas 12</h3>
+                        <p>Pelajari Kalkulus, Integral, dan Matriks untuk persiapan kuliah</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="math-progress" style="width: 0%"></div>
+                        </div>
+                        <div class="course-meta">
+                            <span>📚 3 Materi</span>
+                            <span>⏱️ 3 Jam</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="navigateTo('matematika')">Mulai Belajar</button>
+                    </div>
+                </div>
+
+                <div class="course-card" data-course="ppkn">
+                    <div class="course-header ppkn-gradient">
+                        <span class="course-icon">🇮🇩</span>
+                    </div>
+                    <div class="course-body">
+                        <h3>PPKn Kelas 12</h3>
+                        <p>Memahami Bhineka Tunggal Ika, Demokrasi, dan Hubungan Internasional</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="ppkn-progress" style="width: 0%"></div>
+                        </div>
+                        <div class="course-meta">
+                            <span>📚 3 Materi</span>
+                            <span>⏱️ 2.5 Jam</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="navigateTo('ppkn')">Mulai Belajar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Matematika Page -->
+        <section id="matematika" class="page">
+            <div class="page-header">
+                <h1>📐 Course Matematika Kelas 12</h1>
+                <p>Materi lanjutan untuk persiapan ujian dan kuliah</p>
+            </div>
+
+            <div class="course-content">
+                <div class="modules-list">
+                    <div class="module-item" data-module="1">
+                        <div class="module-header" onclick="toggleModule(1)">
+                            <div class="module-title">
+                                <span class="module-number">1</span>
+                                <h3>Turunan Fungsi (Kalkulus)</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('kalkulus')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Kalkulus</span>
+                                    <input type="checkbox" class="lesson-check" data-course="math" data-lesson="1-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module-item" data-module="2">
+                        <div class="module-header" onclick="toggleModule(2)">
+                            <div class="module-title">
+                                <span class="module-number">2</span>
+                                <h3>Integral</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('integral')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Integral</span>
+                                    <input type="checkbox" class="lesson-check" data-course="math" data-lesson="2-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module-item" data-module="3">
+                        <div class="module-header" onclick="toggleModule(3)">
+                            <div class="module-title">
+                                <span class="module-number">3</span>
+                                <h3>Matriks</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('matriks')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Matriks</span>
+                                    <input type="checkbox" class="lesson-check" data-course="math" data-lesson="3-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-section">
+                    <h2>🎯 Kuis Matematika</h2>
+                    <p>Uji pemahamanmu dengan mengerjakan kuis berikut</p>
+                    <button class="btn btn-quiz" onclick="startQuiz('math')">Mulai Kuis</button>
+                    <div class="quiz-result" id="math-quiz-result"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PPKn Page -->
+        <section id="ppkn" class="page">
+            <div class="page-header">
+                <h1>🇮🇩 Course PPKn Kelas 12</h1>
+                <p>Membangun kesadaran berbangsa dan bernegara</p>
+            </div>
+
+            <div class="course-content">
+                <div class="modules-list">
+                    <div class="module-item" data-module="4">
+                        <div class="module-header" onclick="toggleModule(4)">
+                            <div class="module-title">
+                                <span class="module-number">1</span>
+                                <h3>Bhineka Tunggal Ika</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('bhinneka')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Bhineka Tunggal Ika</span>
+                                    <input type="checkbox" class="lesson-check" data-course="ppkn" data-lesson="4-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module-item" data-module="5">
+                        <div class="module-header" onclick="toggleModule(5)">
+                            <div class="module-title">
+                                <span class="module-number">2</span>
+                                <h3>Sistem dan Dinamika Demokrasi</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('demokrasi')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Demokrasi</span>
+                                    <input type="checkbox" class="lesson-check" data-course="ppkn" data-lesson="5-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module-item" data-module="6">
+                        <div class="module-header" onclick="toggleModule(6)">
+                            <div class="module-title">
+                                <span class="module-number">3</span>
+                                <h3>Hubungan Internasional Indonesia</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('internasional')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Hubungan Internasional</span>
+                                    <input type="checkbox" class="lesson-check" data-course="ppkn" data-lesson="6-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-section">
+                    <h2>🎯 Kuis PPKn</h2>
+                    <p>Uji pemahamanmu tentang materi kelas 12</p>
+                    <button class="btn btn-quiz" onclick="startQuiz('ppkn')">Mulai Kuis</button>
+                    <div class="quiz-result" id="ppkn-quiz-result">                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fun Games Page -->
+        <section id="fun-games" class="page">
+            <div class="page-header">
+                <h1>🎮 Fun Learning Games</h1>
+                <p>Pilih game yang ingin kamu mainkan!</p>
+            </div>
+
+            <!-- Game Selection -->
+            <div id="game-selection" class="games-section" style="background: transparent; box-shadow: none; padding: 0;">
+                <div class="games-grid">
+                    <div class="game-card" onclick="startQuizBattleGame()">
+                        <div class="game-icon">🎯</div>
+                        <h3>Quiz Battle</h3>
+                        <p>Tic-tac-toe dengan pertanyaan Matematika & PPKn</p>
+                        <div class="game-stats">
+                            <span>🏆 Best: <strong id="quiz-battle-best-page">0</strong></span>
+                            <span>🎮 Played: <strong id="quiz-battle-played-page">0</strong></span>
+                        </div>
+                        <button class="btn btn-game">Main Sekarang</button>
+                    </div>
+
+                    <div class="game-card" onclick="startMemoryMatchGame()">
+                        <div class="game-icon">🧠</div>
+                        <h3>Memory Match</h3>
+                        <p>Cocokkan kartu rumus dengan jawabannya</p>
+                        <div class="game-stats">
+                            <span>⏱️ Best: <strong id="memory-best-page">-</strong></span>
+                            <span>🎮 Played: <strong id="memory-played-page">0</strong></span>
+                        </div>
+                        <button class="btn btn-game">Main Sekarang</button>
+                    </div>
+
+                    <div class="game-card" onclick="startSpeedQuizGame()">
+                        <div class="game-icon">⚡</div>
+                        <h3>Speed Quiz</h3>
+                        <p>Jawab sebanyak mungkin dalam 60 detik</p>
+                        <div class="game-stats">
+                            <span>🔥 Best: <strong id="speed-best-page">0</strong></span>
+                            <span>🎮 Played: <strong id="speed-played-page">0</strong></span>
+                        </div>
+                        <button class="btn btn-game">Main Sekarang</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Battle Game Area -->
+            <div id="quiz-battle-area" class="game-play-area" style="display: none;">
+                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
+                <div class="quiz-battle-container">
+                    <h2>🎯 Quiz Battle</h2>
+                    <div class="battle-info">
+                        <div>
+                            <p>Giliran:</p>
+                            <h3 id="current-turn" class="player-x">X (Kamu)</h3>
+                        </div>
+                        <div>
+                            <p>Score:</p>
+                            <h3 id="battle-score">0 - 0</h3>
+                        </div>
+                    </div>
+                    <div class="tic-tac-toe-board" id="battle-board"></div>
+                    <div id="battle-question-area"></div>
+                    <div id="battle-result-area"></div>
+                </div>
+            </div>
+
+            <!-- Memory Match Game Area -->
+            <div id="memory-match-area" class="game-play-area" style="display: none;">
+                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
+                <div class="memory-game-container">
+                    <h2>🧠 Memory Match</h2>
+                    <div class="memory-stats">
+                        <div>⏱️ Waktu<br><strong id="memory-timer-display">0s</strong></div>
+                        <div>🎯 Moves<br><strong id="memory-moves-display">0</strong></div>
+                        <div>✅ Matched<br><strong id="memory-matched-display">0/8</strong></div>
+                    </div>
+                    <div class="memory-board" id="memory-board"></div>
+                </div>
+            </div>
+
+            <!-- Speed Quiz Game Area -->
+            <div id="speed-quiz-area" class="game-play-area" style="display: none;">
+                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
+                <div class="speed-quiz-container">
+                    <h2>⚡ Speed Quiz</h2>
+                    <div class="speed-timer" id="speed-timer-display">60s</div>
+                    <div class="speed-score">
+                        <div>💯 Score<br><strong id="speed-score-display">0</strong></div>
+                        <div>✅ Benar<br><strong id="speed-correct-display">0</strong></div>
+                        <div>❌ Salah<br><strong id="speed-wrong-display">0</strong></div>
+                    </div>
+                    <div id="speed-question-area"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section id="profile" class="page">
+            <div class="page-header">
+                <h1>👤 Profil Saya</h1>
+            </div>
+
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <span class="avatar-icon">👨‍🎓</span>
+                    </div>
+                    <h2 id="profile-name">Siswa EduNusantara</h2>
+                    <p class="profile-class">Kelas XII</p>
+                </div>
+
+                <div class="achievements">
+                    <h2>🏆 Pencapaian</h2>
+                    <div class="achievement-grid" id="achievement-container">
+                        <div class="achievement-item locked">
+                            <span class="achievement-icon">🌟</span>
+                            <p>Pemula</p>
+                        </div>
+                        <div class="achievement-item locked">
+                            <span class="achievement-icon">📚</span>
+                            <p>Rajin Belajar</p>
+                        </div>
+                        <div class="achievement-item locked">
+                            <span class="achievement-icon">💯</span>
+                            <p>Nilai Sempurna</p>
+                        </div>
+                        <div class="achievement-item locked">
+                            <span class="achievement-icon">🎓</span>
+                            <p>Lulus Semua</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learning-stats">
+                    <h2>📊 Statistik Belajar</h2>
+                    <div class="stat-row">
+                        <span>Total Materi Selesai:</span>
+                        <strong id="total-lessons">0/6</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>Nilai Rata-rata:</span>
+                        <strong id="average-score">0</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>Waktu Belajar:</span>
+                        <strong id="study-time">0 menit</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lesson Modal -->
+    <div id="lesson-modal" class="modal">
+        <div class="modal-content lesson-modal-content">
+            <span class="close-modal" onclick="closeLesson()">&times;</span>
+            <div id="lesson-container"></div>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeQuiz()">&times;</span>
+            <div id="quiz-container"></div>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div id="game-modal" class="modal">
+        <div class="modal-content game-modal-content">
+            <span class="close-modal" onclick="closeGame()">&times;</span>
+            <div id="game-container"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
