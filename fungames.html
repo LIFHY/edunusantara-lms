@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduNusantara - Fun Games</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">EduNusantara</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="matematika.html" class="nav-link">Matematika</a></li>
+                <li><a href="ppkn.html" class="nav-link">PPKn</a></li>
+                <li><a href="fungames.html" class="nav-link active">Fun Games</a></li>
+                <li><a href="profile.html" class="nav-link">Profil</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section id="fun-games" class="page active">
+            <div class="page-header">
+                <h1>🎮 Fun Learning Games</h1>
+                <p>Pilih game yang ingin kamu mainkan!</p>
+            </div>
+
+            <!-- Game Selection -->
+            <div id="game-selection" class="games-section">
+                <div class="games-grid">
+                    <div class="game-card" onclick="startQuizBattleGame()">
+                        <div class="game-icon">🎯</div>
+                        <h3>Quiz Battle</h3>
+                        <p>Tic-tac-toe dengan pertanyaan Matematika & PPKn</p>
+                        <div class="game-stats">
+                            <span>🏆 Best: <strong id="quiz-battle-best-page">0</strong></span>
+                            <span>🎮 Played: <strong id="quiz-battle-played-page">0</strong></span>
+                        </div>
+                        <button class="btn btn-game">Main Sekarang</button>
+                    </div>
+
+                    <div class="game-card" onclick="startMemoryMatchGame()">
+                        <div class="game-icon">🧠</div>
+                        <h3>Memory Match</h3>
+                        <p>Cocokkan kartu rumus dengan jawabannya</p>
+                        <div class="game-stats">
+                            <span>⏱️ Best: <strong id="memory-best-page">-</strong></span>
+                            <span>🎮 Played: <strong id="memory-played-page">0</strong></span>
+                        </div>
+                        <button class="btn btn-game">Main Sekarang</button>
+                    </div>
+
+                    <div class="game-card" onclick="startSpeedQuizGame()">
+                        <div class="game-icon">⚡</div>
+                        <h3>Speed Quiz</h3>
+                        <p>Jawab sebanyak mungkin dalam 60 detik</p>
+                        <div class="game-stats">
+                            <span>🔥 Best: <strong id="speed-best-page">0</strong></span>
+                            <span>🎮 Played: <strong id="speed-played-page">0</strong></span>
+                        </div>
+                        <button class="btn btn-game">Main Sekarang</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Battle Game Area -->
+            <div id="quiz-battle-area" class="game-play-area" style="display: none;">
+                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
+                <div class="quiz-battle-container">
+                    <h2>🎯 Quiz Battle</h2>
+                    <div class="battle-info">
+                        <div>
+                            <p>Giliran:</p>
+                            <h3 id="current-turn" class="player-x">X (Kamu)</h3>
+                        </div>
+                        <div>
+                            <p>Score:</p>
+                            <h3 id="battle-score">0 - 0</h3>
+                        </div>
+                    </div>
+                    <div class="tic-tac-toe-board" id="battle-board"></div>
+                    <div id="battle-question-area"></div>
+                    <div id="battle-result-area"></div>
+                </div>
+            </div>
+
+            <!-- Memory Match Game Area -->
+            <div id="memory-match-area" class="game-play-area" style="display: none;">
+                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
+                <div class="memory-game-container">
+                    <h2>🧠 Memory Match</h2>
+                    <div class="memory-stats">
+                        <div>⏱️ Waktu<br><strong id="memory-timer-display">0s</strong></div>
+                        <div>🎯 Moves<br><strong id="memory-moves-display">0</strong></div>
+                        <div>✅ Matched<br><strong id="memory-matched-display">0/8</strong></div>
+                    </div>
+                    <div class="memory-board" id="memory-board"></div>
+                </div>
+            </div>
+
+            <!-- Speed Quiz Game Area -->
+            <div id="speed-quiz-area" class="game-play-area" style="display: none;">
+                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
+                <div class="speed-quiz-container">
+                    <h2>⚡ Speed Quiz</h2>
+                    <div class="speed-timer" id="speed-timer-display">60s</div>
+                    <div class="speed-score">
+                        <div>💯 Score<br><strong id="speed-score-display">0</strong></div>
+                        <div>✅ Benar<br><strong id="speed-correct-display">0</strong></div>
+                        <div>❌ Salah<br><strong id="speed-wrong-display">0</strong></div>
+                    </div>
+                    <div id="speed-question-area"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduNusantara - Profil</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">EduNusantara</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="matematika.html" class="nav-link">Matematika</a></li>
+                <li><a href="ppkn.html" class="nav-link">PPKn</a></li>
+                <li><a href="fungames.html" class="nav-link">Fun Games</a></li>
+                <li><a href="profile.html" class="nav-link active">Profil</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section id="profile" class="page active">
+            <div class="page-header">
+                <h1>👤 Profil Saya</h1>
+            </div>
+
+            <div class="profile-container">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <span class="avatar-icon">👨‍🎓</span>
+                    </div>
+                    <h2 id="profile-name">Siswa EduNusantara</h2>
+                    <p class="profile-class">Kelas XII</p>
+                </div>
+
+                <div class="achievements">
+                    <h2>🏆 Pencapaian</h2>
+                    <div class="achievement-grid" id="achievement-container">
+                        <div class="achievement-item locked">
+                            <span class="achievement-icon">🌟</span>
+                            <p>Pemula</p>
+                        </div>
+                        <div class="achievement-item locked">
+                            <span class="achievement-icon">📚</span>
+                            <p>Rajin Belajar</p>
+                        </div>
+                        <div class="achievement-item locked">
+                            <span class="achievement-icon">💯</span>
+                            <p>Nilai Sempurna</p>
+                        </div>
+                        <div class="achievement-item locked">
+                            <span class="achievement-icon">🎓</span>
+                            <p>Lulus Semua</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="learning-stats">
+                    <h2>📊 Statistik Belajar</h2>
+                    <div class="stat-row">
+                        <span>Total Materi Selesai:</span>
+                        <strong id="total-lessons">0/6</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>Nilai Rata-rata:</span>
+                        <strong id="average-score">0</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>Waktu Belajar:</span>
+                        <strong id="study-time">0 menit</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

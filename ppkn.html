@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduNusantara - PPKn</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">EduNusantara</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="matematika.html" class="nav-link">Matematika</a></li>
+                <li><a href="ppkn.html" class="nav-link active">PPKn</a></li>
+                <li><a href="fungames.html" class="nav-link">Fun Games</a></li>
+                <li><a href="profile.html" class="nav-link">Profil</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section id="ppkn" class="page active">
+            <div class="page-header">
+                <h1>🇮🇩 Course PPKn Kelas 12</h1>
+                <p>Membangun kesadaran berbangsa dan bernegara</p>
+            </div>
+
+            <div class="course-content">
+                <div class="modules-list">
+                    <div class="module-item" data-module="4">
+                        <div class="module-header" onclick="toggleModule(4)">
+                            <div class="module-title">
+                                <span class="module-number">1</span>
+                                <h3>Bhineka Tunggal Ika</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('bhinneka')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Bhineka Tunggal Ika</span>
+                                    <input type="checkbox" class="lesson-check" data-course="ppkn" data-lesson="4-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module-item" data-module="5">
+                        <div class="module-header" onclick="toggleModule(5)">
+                            <div class="module-title">
+                                <span class="module-number">2</span>
+                                <h3>Sistem dan Dinamika Demokrasi</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('demokrasi')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Demokrasi</span>
+                                    <input type="checkbox" class="lesson-check" data-course="ppkn" data-lesson="5-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="module-item" data-module="6">
+                        <div class="module-header" onclick="toggleModule(6)">
+                            <div class="module-title">
+                                <span class="module-number">3</span>
+                                <h3>Hubungan Internasional Indonesia</h3>
+                            </div>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('internasional')">📖 Baca Materi</button>
+                            <div class="lesson-list">
+                                <div class="lesson-item">
+                                    <span class="lesson-icon">✓</span>
+                                    <span>Baca dan pahami materi Hubungan Internasional</span>
+                                    <input type="checkbox" class="lesson-check" data-course="ppkn" data-lesson="6-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-section">
+                    <h2>🎯 Kuis PPKn</h2>
+                    <p>Uji pemahamanmu tentang materi kelas 12</p>
+                    <button class="btn btn-quiz" onclick="startQuiz('ppkn')">Mulai Kuis</button>
+                    <div class="quiz-result" id="ppkn-quiz-result"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lesson Modal -->
+    <div id="lesson-modal" class="modal">
+        <div class="modal-content lesson-modal-content">
+            <span class="close-modal" onclick="closeLesson()">&times;</span>
+            <div id="lesson-container"></div>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quiz-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeQuiz()">&times;</span>
+            <div id="quiz-container"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,1428 +1,1777 @@
-// Data Storage
-const appData = {
+// ===== DATA STORAGE =====
+
+let appData = {
+    currentClass: 7,
     progress: {
-        math: 0,
-        ppkn: 0
+        matematika: { kelas7: 75, kelas8: 45, kelas9: 20 },
+        indonesia: { kelas7: 50, kelas8: 30, kelas9: 10 },
+        ipa: { kelas7: 90, kelas8: 60, kelas9: 35 },
+        ips: { kelas7: 40, kelas8: 25, kelas9: 15 },
+        english: { kelas7: 65, kelas8: 40, kelas9: 15 },
+        ppkn: { kelas7: 30, kelas8: 20, kelas9: 10 },
+        senibudaya: { kelas7: 25, kelas8: 15, kelas9: 5 },
+        pjok: { kelas7: 35, kelas8: 20, kelas9: 10 },
+        prakarya: { kelas7: 20, kelas8: 10, kelas9: 5 },
+        informatika: { kelas7: 85, kelas8: 60, kelas9: 40 }
     },
     completedLessons: {
-        math: [],
-        ppkn: []
+        matematika: { kelas7: ['lesson-0', 'lesson-1', 'lesson-2'], kelas8: ['lesson-0'], kelas9: [] },
+        indonesia: { kelas7: ['lesson-0', 'lesson-1'], kelas8: [], kelas9: [] },
+        ipa: { kelas7: ['lesson-0', 'lesson-1', 'lesson-2', 'lesson-3'], kelas8: ['lesson-0', 'lesson-1'], kelas9: [] },
+        ips: { kelas7: ['lesson-0'], kelas8: [], kelas9: [] },
+        english: { kelas7: ['lesson-0', 'lesson-1'], kelas8: [], kelas9: [] },
+        ppkn: { kelas7: ['lesson-0'], kelas8: [], kelas9: [] },
+        senibudaya: { kelas7: ['lesson-0'], kelas8: [], kelas9: [] },
+        pjok: { kelas7: ['lesson-0'], kelas8: [], kelas9: [] },
+        prakarya: { kelas7: [], kelas8: [], kelas9: [] },
+        informatika: { kelas7: ['lesson-0', 'lesson-1', 'lesson-2', 'lesson-3'], kelas8: ['lesson-0', 'lesson-1'], kelas9: [] }
     },
     quizScores: {
-        math: null,
-        ppkn: null
+        matematika: { kelas7: 85, kelas8: null, kelas9: null },
+        indonesia: { kelas7: 70, kelas8: null, kelas9: null },
+        ipa: { kelas7: 95, kelas8: null, kelas9: null },
+        ips: { kelas7: 60, kelas8: null, kelas9: null },
+        english: { kelas7: 75, kelas8: null, kelas9: null },
+        ppkn: { kelas7: 55, kelas8: null, kelas9: null },
+        senibudaya: { kelas7: null, kelas8: null, kelas9: null },
+        pjok: { kelas7: null, kelas8: null, kelas9: null },
+        prakarya: { kelas7: null, kelas8: null, kelas9: null },
+        informatika: { kelas7: 90, kelas8: null, kelas9: null }
     },
-    studyTime: 0,
-    achievements: [],
+    studyTime: 245,
+    achievements: ['pemula', 'rajin'],
+    streakDays: 7,
+    lastStudyDate: new Date().toDateString(),
     gameStats: {
-        quizBattle: { played: 0, bestScore: 0 },
-        memoryMatch: { played: 0, bestTime: null },
-        speedQuiz: { played: 0, bestScore: 0 }
+        quizBattle: { played: 15, bestScore: 950 },
+        memoryMatch: { played: 20, bestTime: '01:25' },
+        speedQuiz: { played: 25, bestScore: 880 }
     }
 };
 
-// Lesson Content Data
-const lessonContent = {
-    kalkulus: {
-        title: "Turunan Fungsi (Kalkulus)",
-        content: `
-            <h3>📚 Pengertian Turunan</h3>
-            <p>Turunan fungsi adalah konsep fundamental dalam kalkulus yang mengukur laju perubahan suatu fungsi terhadap variabelnya. Turunan menggambarkan gradien atau kemiringan garis singgung pada suatu titik pada kurva fungsi.</p>
-
-            <h3>🔢 Notasi Turunan</h3>
-            <p>Jika y = f(x), maka turunan fungsi dapat ditulis sebagai:</p>
-            <div class="formula-box">
-                f'(x) atau dy/dx atau df(x)/dx
-            </div>
-
-            <h3>📐 Rumus Dasar Turunan</h3>
-            <div class="formula-box">
-                1. f(x) = c → f'(x) = 0 (konstanta)<br>
-                2. f(x) = x^n → f'(x) = n·x^(n-1) (pangkat)<br>
-                3. f(x) = c·g(x) → f'(x) = c·g'(x) (konstanta kali fungsi)<br>
-                4. f(x) = u(x) + v(x) → f'(x) = u'(x) + v'(x) (penjumlahan)<br>
-                5. f(x) = u(x)·v(x) → f'(x) = u'(x)·v(x) + u(x)·v'(x) (perkalian)
-            </div>
-
-            <h3>💡 Contoh Soal 1</h3>
-            <div class="example-box">
-                <h4>Soal:</h4>
-                <p>Tentukan turunan dari f(x) = 3x² + 5x - 7</p>
-                <h4>Penyelesaian:</h4>
-                <p>f'(x) = 3·(2x) + 5·(1) - 0</p>
-                <p>f'(x) = 6x + 5</p>
-            </div>
-
-            <h3>💡 Contoh Soal 2</h3>
-            <div class="example-box">
-                <h4>Soal:</h4>
-                <p>Tentukan turunan dari f(x) = 4x³ - 2x² + x - 8</p>
-                <h4>Penyelesaian:</h4>
-                <p>f'(x) = 4·(3x²) - 2·(2x) + 1 - 0</p>
-                <p>f'(x) = 12x² - 4x + 1</p>
-            </div>
-
-            <h3>🎯 Aplikasi Turunan</h3>
-            <ul>
-                <li><strong>Kecepatan:</strong> Turunan pertama dari fungsi posisi terhadap waktu</li>
-                <li><strong>Percepatan:</strong> Turunan kedua dari fungsi posisi</li>
-                <li><strong>Maksimum/Minimum:</strong> Mencari titik ekstrem dengan f'(x) = 0</li>
-                <li><strong>Gradien:</strong> Menentukan kemiringan garis singgung kurva</li>
-            </ul>
-
-            <div class="note-box">
-                <strong>Catatan Penting:</strong> Turunan sangat berguna dalam menganalisis perubahan, optimasi masalah, dan pemodelan fenomena alam!
-            </div>
-        `
-    },
-    integral: {
-        title: "Integral",
-        content: `
-            <h3>📚 Pengertian Integral</h3>
-            <p>Integral adalah kebalikan dari turunan (anti-turunan). Integral digunakan untuk menghitung luas daerah di bawah kurva, volume benda putar, dan banyak aplikasi lainnya.</p>
-
-            <h3>🔢 Jenis-jenis Integral</h3>
-            <p><strong>1. Integral Tak Tentu:</strong> Hasil integral yang masih mengandung konstanta C</p>
-            <p><strong>2. Integral Tentu:</strong> Integral dengan batas atas dan bawah yang menghasilkan nilai tertentu</p>
-
-            <h3>📐 Rumus Dasar Integral Tak Tentu</h3>
-            <div class="formula-box">
-                1. ∫ k dx = kx + C (konstanta)<br>
-                2. ∫ x^n dx = (x^(n+1))/(n+1) + C, n ≠ -1<br>
-                3. ∫ (f(x) + g(x)) dx = ∫f(x)dx + ∫g(x)dx<br>
-                4. ∫ k·f(x) dx = k·∫f(x)dx
-            </div>
-
-            <h3>📐 Rumus Integral Tentu</h3>
-            <div class="formula-box">
-                ∫[a,b] f(x)dx = F(b) - F(a)<br>
-                dimana F(x) adalah anti-turunan dari f(x)
-            </div>
-
-            <h3>💡 Contoh Soal 1: Integral Tak Tentu</h3>
-            <div class="example-box">
-                <h4>Soal:</h4>
-                <p>Tentukan ∫(6x² + 4x - 3)dx</p>
-                <h4>Penyelesaian:</h4>
-                <p>∫(6x² + 4x - 3)dx = 6·(x³/3) + 4·(x²/2) - 3x + C</p>
-                <p>= 2x³ + 2x² - 3x + C</p>
-            </div>
-
-            <h3>💡 Contoh Soal 2: Integral Tentu</h3>
-            <div class="example-box">
-                <h4>Soal:</h4>
-                <p>Hitung ∫[1,3] (x² + 2x)dx</p>
-                <h4>Penyelesaian:</h4>
-                <p>F(x) = x³/3 + x²</p>
-                <p>∫[1,3] = F(3) - F(1)</p>
-                <p>= (27/3 + 9) - (1/3 + 1)</p>
-                <p>= (9 + 9) - (1/3 + 1) = 18 - 4/3 = 50/3</p>
-            </div>
-
-            <h3>🎯 Aplikasi Integral</h3>
-            <ul>
-                <li><strong>Menghitung Luas:</strong> Luas daerah di bawah kurva</li>
-                <li><strong>Volume Benda Putar:</strong> Volume yang terbentuk saat kurva diputar</li>
-                <li><strong>Panjang Kurva:</strong> Menghitung panjang busur kurva</li>
-                <li><strong>Fisika:</strong> Menghitung kerja, momentum, dan energi</li>
-            </ul>
-
-            <div class="note-box">
-                <strong>Tips:</strong> Jangan lupa menambahkan konstanta C pada integral tak tentu!
-            </div>
-        `
-    },
-    matriks: {
-        title: "Matriks",
-        content: `
-            <h3>📚 Pengertian Matriks</h3>
-            <p>Matriks adalah susunan bilangan berbentuk persegi panjang yang disusun dalam baris dan kolom. Matriks sangat penting dalam aljabar linear dan memiliki banyak aplikasi dalam berbagai bidang.</p>
-
-            <h3>🔢 Notasi Matriks</h3>
-            <p>Matriks berordo m × n memiliki m baris dan n kolom:</p>
-            <div class="formula-box">
-                A = [a₁₁  a₁₂  a₁₃]<br>
-                    [a₂₁  a₂₂  a₂₃]<br>
-                Matriks A berordo 2×3
-            </div>
-
-            <h3>📐 Operasi Matriks</h3>
-            <p><strong>1. Penjumlahan Matriks</strong></p>
-            <p>Syarat: Ordo kedua matriks harus sama</p>
-            <div class="formula-box">
-                A + B = [aᵢⱼ + bᵢⱼ]
-            </div>
-
-            <p><strong>2. Pengurangan Matriks</strong></p>
-            <div class="formula-box">
-                A - B = [aᵢⱼ - bᵢⱼ]
-            </div>
-
-            <p><strong>3. Perkalian Skalar</strong></p>
-            <div class="formula-box">
-                k × A = [k × aᵢⱼ]
-            </div>
-
-            <p><strong>4. Perkalian Matriks</strong></p>
-            <p>Syarat: Jumlah kolom matriks pertama = jumlah baris matriks kedua</p>
-
-            <h3>💡 Contoh Soal 1: Penjumlahan</h3>
-            <div class="example-box">
-                <h4>Soal:</h4>
-                <p>A = [2  3]  dan B = [1  4]</p>
-                <p>    [1  5]          [2  3]</p>
-                <p>Hitunglah A + B</p>
-                <h4>Penyelesaian:</h4>
-                <p>A + B = [2+1  3+4] = [3  7]</p>
-                <p>        [1+2  5+3]   [3  8]</p>
-            </div>
-
-            <h3>💡 Contoh Soal 2: Perkalian</h3>
-            <div class="example-box">
-                <h4>Soal:</h4>
-                <p>A = [1  2]  dan B = [5  6]</p>
-                <p>    [3  4]          [7  8]</p>
-                <p>Hitunglah A × B</p>
-                <h4>Penyelesaian:</h4>
-                <p>A × B = [(1×5+2×7)  (1×6+2×8)]</p>
-                <p>        [(3×5+4×7)  (3×6+4×8)]</p>
-                <p>      = [19  22]</p>
-                <p>        [43  50]</p>
-            </div>
-
-            <h3>🎯 Determinan Matriks 2×2</h3>
-            <div class="formula-box">
-                det(A) = |a  b| = ad - bc<br>
-                         |c  d|
-            </div>
-
-            <h3>🎯 Invers Matriks 2×2</h3>
-            <div class="formula-box">
-                A⁻¹ = 1/det(A) × [d  -b]<br>
-                                 [-c  a]
-            </div>
-
-            <div class="note-box">
-                <strong>Aplikasi Matriks:</strong> Sistem persamaan linear, transformasi geometri, ekonomi, komputer grafis, dan kriptografi!
-            </div>
-        `
-    },
-    bhinneka: {
-        title: "Bhineka Tunggal Ika",
-        content: `
-            <h3>📚 Makna Bhineka Tunggal Ika</h3>
-            <p>"Bhineka Tunggal Ika" berasal dari bahasa Sanskerta yang berarti "berbeda-beda tetapi tetap satu". Semboyan ini menjadi pemersatu bangsa Indonesia yang memiliki keragaman suku, agama, ras, dan budaya.</p>
-
-            <h3>🏛️ Sejarah Bhineka Tunggal Ika</h3>
-            <p>Semboyan ini berasal dari Kakawin Sutasoma karya Mpu Tantular pada masa Kerajaan Majapahit (abad ke-14). Kalimat lengkapnya adalah:</p>
-            <div class="formula-box">
-                "Bhinnêka tunggal ika tan hana dharma mangrwa"<br>
-                (Berbeda-beda tetapi tetap satu, tak ada kebenaran yang mendua)
-            </div>
-
-            <h3>🌟 Nilai-nilai Bhineka Tunggal Ika</h3>
-            <ul>
-                <li><strong>Toleransi:</strong> Menghormati perbedaan agama, suku, dan budaya</li>
-                <li><strong>Persatuan:</strong> Menjaga keutuhan NKRI di tengah keberagaman</li>
-                <li><strong>Kesetaraan:</strong> Semua warga negara memiliki hak yang sama</li>
-                <li><strong>Gotong Royong:</strong> Bekerja sama untuk kepentingan bersama</li>
-                <li><strong>Menghargai Keberagaman:</strong> Menjadikan perbedaan sebagai kekuatan</li>
-            </ul>
-
-            <h3>🇮🇩 Keberagaman Indonesia</h3>
-            <div class="example-box">
-                <h4>Fakta Keberagaman Nusantara:</h4>
-                <ul>
-                    <li>Lebih dari 300 suku bangsa</li>
-                    <li>Lebih dari 700 bahasa daerah</li>
-                    <li>6 agama resmi yang diakui</li>
-                    <li>34 provinsi dengan karakteristik unik</li>
-                    <li>Ribuan pulau dari Sabang sampai Merauke</li>
-                </ul>
-            </div>
-
-            <h3>💡 Contoh Penerapan dalam Kehidupan</h3>
-            <div class="example-box">
-                <h4>Di Sekolah:</h4>
-                <p>Berteman dengan semua teman tanpa membeda-bedakan suku, agama, atau latar belakang</p>
-                <h4>Di Masyarakat:</h4>
-                <p>Ikut serta dalam kegiatan gotong royong, menghormati tradisi tetangga yang berbeda</p>
-                <h4>Di Media Sosial:</h4>
-                <p>Tidak menyebarkan konten yang memecah belah atau menyinggung SARA</p>
-            </div>
-
-            <h3>⚠️ Tantangan terhadap Bhineka Tunggal Ika</h3>
-            <ul>
-                <li>Radikalisme dan intoleransi</li>
-                <li>Konflik horizontal antar kelompok</li>
-                <li>Hoaks dan ujaran kebencian di media sosial</li>
-                <li>Separatisme dan disintegrasi bangsa</li>
-                <li>Kesenjangan ekonomi antar daerah</li>
-            </ul>
-
-            <div class="note-box">
-                <strong>Ingat:</strong> Bhineka Tunggal Ika adalah pilar utama persatuan Indonesia. Kita harus menjaga dan mengamalkannya dalam kehidupan sehari-hari!
-            </div>
-        `
-    },
-    demokrasi: {
-        title: "Sistem dan Dinamika Demokrasi Pancasila",
-        content: `
-            <h3>📚 Pengertian Demokrasi Pancasila</h3>
-            <p>Demokrasi Pancasila adalah sistem demokrasi yang berlandaskan pada nilai-nilai Pancasila. Demokrasi ini mengutamakan musyawarah mufakat, bukan voting semata, dan menempatkan kepentingan bersama di atas kepentingan individu atau kelompok.</p>
-
-            <h3>🏛️ Prinsip-prinsip Demokrasi Pancasila</h3>
-            <ul>
-                <li><strong>Permusyawaratan:</strong> Keputusan diambil melalui musyawarah untuk mufakat</li>
-                <li><strong>Ketuhanan Yang Maha Esa:</strong> Kebebasan beragama dijamin negara</li>
-                <li><strong>Kemanusiaan:</strong> Menghormati hak asasi manusia</li>
-                <li><strong>Persatuan:</strong> Mengutamakan kepentingan bangsa</li>
-                <li><strong>Kerakyatan:</strong> Kedaulatan ada di tangan rakyat</li>
-                <li><strong>Keadilan Sosial:</strong> Kesejahteraan untuk semua warga</li>
-            </ul>
-
-            <h3>🔄 Perbedaan Demokrasi Pancasila dengan Demokrasi Liberal</h3>
-            <div class="example-box">
-                <h4>Demokrasi Pancasila:</h4>
-                <ul>
-                    <li>Musyawarah mufakat</li>
-                    <li>Kepentingan bersama diutamakan</li>
-                    <li>Berlandaskan nilai Pancasila</li>
-                    <li>Kebebasan bertanggung jawab</li>
-                </ul>
-                <h4>Demokrasi Liberal:</h4>
-                <ul>
-                    <li>Voting/suara terbanyak</li>
-                    <li>Kebebasan individu mutlak</li>
-                    <li>Sekuler (pemisahan agama-negara)</li>
-                    <li>Kompetisi bebas tanpa batas</li>
-                </ul>
-            </div>
-
-            <h3>🗳️ Pelaksanaan Demokrasi di Indonesia</h3>
-            <p><strong>1. Pemilu (Pemilihan Umum)</strong></p>
-            <ul>
-                <li>Pemilu Presiden dan Wakil Presiden</li>
-                <li>Pemilu Legislatif (DPR, DPD, DPRD)</li>
-                <li>Pemilihan Kepala Daerah (Pilkada)</li>
-            </ul>
-
-            <p><strong>2. Sistem Pemerintahan</strong></p>
-            <ul>
-                <li>Sistem Presidensial</li>
-                <li>Trias Politika (Eksekutif, Legislatif, Yudikatif)</li>
-                <li>Checks and Balances</li>
-            </ul>
-
-            <h3>💡 Hak dan Kewajiban Warga Negara dalam Demokrasi</h3>
-            <div class="example-box">
-                <h4>Hak Politik:</h4>
-                <ul>
-                    <li>Memilih dan dipilih dalam Pemilu</li>
-                    <li>Menyampaikan pendapat</li>
-                    <li>Berserikat dan berkumpul</li>
-                    <li>Mendapat perlindungan hukum</li>
-                </ul>
-                <h4>Kewajiban:</h4>
-                <ul>
-                    <li>Mematuhi hukum dan peraturan</li>
-                    <li>Berpartisipasi dalam Pemilu</li>
-                    <li>Membayar pajak</li>
-                    <li>Ikut serta dalam pertahanan negara</li>
-                </ul>
-            </div>
-
-            <h3>⚡ Tantangan Demokrasi di Indonesia</h3>
-            <ul>
-                <li>Politik uang (money politics)</li>
-                <li>Korupsi di lembaga pemerintahan</li>
-                <li>Polarisasi politik yang tajam</li>
-                <li>Rendahnya partisipasi pemilih muda</li>
-                <li>Penyebaran hoaks dan disinformasi</li>
-                <li>Intoleransi dan radikalisme</li>
-            </ul>
-
-            <div class="note-box">
-                <strong>Peran Generasi Muda:</strong> Sebagai agen perubahan, kalian harus aktif, kritis, dan bertanggung jawab dalam kehidupan berdemokrasi!
-            </div>
-        `
-    },
-    internasional: {
-        title: "Hubungan Internasional Indonesia",
-        content: `
-            <h3>📚 Pengertian Hubungan Internasional</h3>
-            <p>Hubungan internasional adalah interaksi antara negara dengan negara lain atau dengan organisasi internasional dalam berbagai bidang seperti politik, ekonomi, sosial, budaya, dan pertahanan-keamanan.</p>
-
-            <h3>🌏 Politik Luar Negeri Indonesia</h3>
-            <p>Indonesia menganut politik luar negeri yang <strong>Bebas Aktif</strong>:</p>
-            <ul>
-                <li><strong>Bebas:</strong> Tidak memihak blok kekuatan manapun, tidak terpengaruh politik negara lain</li>
-                <li><strong>Aktif:</strong> Berperan aktif dalam menciptakan perdamaian dunia</li>
-            </ul>
-
-            <div class="formula-box">
-                Landasan: Pembukaan UUD 1945 Alinea I dan IV<br>
-                "...ikut melaksanakan ketertiban dunia berdasarkan kemerdekaan, perdamaian abadi dan keadilan sosial"
-            </div>
-
-            <h3>🤝 Peran Indonesia di Organisasi Internasional</h3>
-            
-            <p><strong>1. Perserikatan Bangsa-Bangsa (PBB)</strong></p>
-            <div class="example-box">
-                <ul>
-                    <li>Indonesia menjadi anggota PBB ke-60 (28 September 1950)</li>
-                    <li>Pernah keluar dari PBB tahun 1965, masuk kembali 1966</li>
-                    <li>Aktif dalam misi perdamaian (peacekeeping)</li>
-                    <li>Pernah menjadi anggota tidak tetap Dewan Keamanan PBB</li>
-                </ul>
-            </div>
-
-            <p><strong>2. ASEAN (Association of Southeast Asian Nations)</strong></p>
-            <div class="example-box">
-                <ul>
-                    <li>Indonesia adalah salah satu pendiri ASEAN (8 Agustus 1967)</li>
-                    <li>Deklarasi Bangkok ditandatangani di Bangkok, Thailand</li>
-                    <li>Tujuan: Kerja sama ekonomi, sosial, budaya, dan keamanan</li>
-                    <li>Indonesia menjadi lokomotif ASEAN</li>
-                </ul>
-            </div>
-
-            <p><strong>3. Gerakan Non-Blok (GNB)</strong></p>
-            <ul>
-                <li>Indonesia adalah salah satu pendiri GNB</li>
-                <li>Konferensi Asia-Afrika Bandung 1955</li>
-                <li>Prinsip: Tidak memihak Blok Barat atau Blok Timur</li>
-            </ul>
-
-            <p><strong>4. Organisasi Kerja Sama Islam (OKI)</strong></p>
-            <ul>
-                <li>Indonesia menjadi anggota OKI</li>
-                <li>Tujuan: Solidaritas negara-negara Islam</li>
-            </ul>
-
-            <h3>💡 Contoh Peran Indonesia di Dunia Internasional</h3>
-            <div class="example-box">
-                <h4>Peran Aktif Indonesia:</h4>
-                <ul>
-                    <li><strong>Mediator Konflik:</strong> Penyelesaian konflik Kamboja, Filipina (Mindanao)</li>
-                    <li><strong>Pasukan Garuda:</strong> Misi perdamaian PBB di berbagai negara</li>
-                    <li><strong>KAA 1955:</strong> Menggagas solidaritas Asia-Afrika</li>
-                    <li><strong>ASEAN Chair:</strong> Memimpin ASEAN berkali-kali</li>
-                    <li><strong>Diplomasi Iklim:</strong> Aktif dalam penanganan perubahan iklim</li>
-                </ul>
-            </div>
-
-            <h3>🌍 Bentuk Kerja Sama Internasional</h3>
-            <ul>
-                <li><strong>Bilateral:</strong> Kerja sama antara 2 negara</li>
-                <li><strong>Multilateral:</strong> Kerja sama lebih dari 2 negara</li>
-                <li><strong>Regional:</strong> Kerja sama dalam satu kawasan (ASEAN)</li>
-                <li><strong>Internasional:</strong> Kerja sama global (PBB, WTO, WHO)</li>
-            </ul>
-
-            <h3>📊 Manfaat Hubungan Internasional</h3>
-            <ul>
-                <li>Meningkatkan kerja sama ekonomi dan perdagangan</li>
-                <li>Transfer teknologi dan ilmu pengetahuan</li>
-                <li>Menjaga perdamaian dan keamanan</li>
-                <li>Meningkatkan citra Indonesia di mata dunia</li>
-                <li>Mendapat bantuan dalam pembangunan</li>
-            </ul>
-
-            <div class="note-box">
-                <strong>Tantangan:</strong> Globalisasi, konflik regional, terorisme, kejahatan transnasional, dan ketergantungan ekonomi. Indonesia harus tetap konsisten dengan politik Bebas Aktif!
-            </div>
-        `
-    }
-};
-
-// Quiz Data - Materi Kelas 12
-const quizData = {
-    math: [
-        {
-            question: "Turunan pertama dari f(x) = 3x⁴ - 2x² + 5 adalah...",
-            options: ["12x³ - 4x", "12x³ - 2x", "3x³ - 4x", "12x⁴ - 4x²"],
-            correct: 0
-        },
-        {
-            question: "Hasil dari ∫(4x³ + 6x)dx adalah...",
-            options: ["x⁴ + 3x² + C", "4x⁴ + 6x² + C", "x⁴ + 6x² + C", "12x² + 6 + C"],
-            correct: 0
-        },
-        {
-            question: "Jika matriks A = [2 3] dan B = [1 0], maka A + B = ...",
-            options: ["[3 3] [6 5]", "[3 3] [4 7]", "[1 3] [6 3]", "[3 0] [4 7]"],
-            correct: 0
-        },
-        {
-            question: "Determinan dari matriks [3 2] adalah...",
-            options: ["5", "1", "7", "11"],
-            correct: 1
-        },
-        {
-            question: "Jika f(x) = x² + 4x, maka f'(2) = ...",
-            options: ["8", "12", "6", "4"],
-            correct: 0
-        }
-    ],
-    ppkn: [
-        {
-            question: "Arti dari 'Bhineka Tunggal Ika' adalah...",
-            options: [
-                "Satu untuk semua",
-                "Berbeda-beda tetapi tetap satu",
-                "Bersatu kita teguh",
-                "Persatuan Indonesia"
-            ],
-            correct: 1
-        },
-        {
-            question: "Semboyan Bhineka Tunggal Ika berasal dari kitab...",
-            options: ["Negarakertagama", "Sutasoma", "Arjunawiwaha", "Ramayana"],
-            correct: 1
-        },
-        {
-            question: "Politik luar negeri Indonesia adalah...",
-            options: ["Bebas Aktif", "Liberal", "Sosialis", "Blok Barat"],
-            correct: 0
-        },
-        {
-            question: "Indonesia keluar dari keanggotaan PBB pada tahun...",
-            options: ["1960", "1965", "1970", "1950"],
-            correct: 1
-        },
-        {
-            question: "ASEAN didirikan pada tanggal...",
-            options: ["17 Agustus 1945", "8 Agustus 1967", "28 Oktober 1928", "18 Agustus 1945"],
-            correct: 1
-        }
-    ]
-};
-
-// Initialization
+// ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
-    setupEventListeners();
-    updateDashboard();
-    updateGameStats();
-    startStudyTimer();
+    console.log('🎓 EduNusantara SMP Platform Initialized');
     
-    // Setup game buttons setelah delay pendek
+    // Initialize with animations
     setTimeout(() => {
-        setupGameButtons();
-    }, 300);
+        document.body.classList.add('loaded');
+    }, 100);
+    
+    loadData();
+    highlightActiveNav();
+    
+    // Setup untuk semua halaman
+    setupCommonFeatures();
+    
+    // Halaman spesifik initialization
+    initializePage();
+    
+    // Setup keyboard shortcuts
+    setupKeyboardShortcuts();
+    
+    // Setup performance monitoring
+    setupPerformanceMonitoring();
 });
 
-function initializeApp() {
-    console.log('EduNusantara LMS Kelas 12 Initialized');
+function initializePage() {
+    const currentPage = getCurrentPage();
+    
+    const pageInitializers = {
+        'index': initializeDashboard,
+        'matematika': () => initializeSubject('matematika'),
+        'bahasaindonesia': () => initializeSubject('indonesia'),
+        'ipa': () => initializeSubject('ipa'),
+        'ips': () => initializeSubject('ips'),
+        'english': () => initializeSubject('english'),
+        'ppkn': () => initializeSubject('ppkn'),
+        'senibudaya': () => initializeSubject('senibudaya'),
+        'pjok': () => initializeSubject('pjok'),
+        'prakarya': () => initializeSubject('prakarya'),
+        'informatika': () => initializeSubject('informatika'),
+        'fungames': initializeFunGames,
+        'profile': initializeProfile
+    };
+    
+    if (pageInitializers[currentPage]) {
+        pageInitializers[currentPage]();
+    }
 }
 
-function setupEventListeners() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const page = this.dataset.page;
-            navigateTo(page);
-        });
-    });
-
-    const lessonChecks = document.querySelectorAll('.lesson-check');
-    lessonChecks.forEach(check => {
-        check.addEventListener('change', function() {
-            handleLessonComplete(this);
-        });
-    });
+function getCurrentPage() {
+    const path = window.location.pathname;
+    const page = path.split('/').pop().split('.')[0];
+    return page || 'index';
 }
 
-function setupGameButtons() {
-    console.log('🎮 Setting up game buttons with direct IDs...');
-    
-    // Quiz Battle Button
-    const btnQuizBattle = document.getElementById('btn-quiz-battle');
-    if (btnQuizBattle) {
-        console.log('✅ Found Quiz Battle button');
-        btnQuizBattle.onclick = function() {
-            console.log('🎯 Quiz Battle clicked!');
-            openGameHandler('quiz-battle');
-        };
-    } else {
-        console.log('❌ Quiz Battle button NOT found');
-    }
-    
-    // Memory Match Button
-    const btnMemoryMatch = document.getElementById('btn-memory-match');
-    if (btnMemoryMatch) {
-        console.log('✅ Found Memory Match button');
-        btnMemoryMatch.onclick = function() {
-            console.log('🧠 Memory Match clicked!');
-            openGameHandler('memory-match');
-        };
-    } else {
-        console.log('❌ Memory Match button NOT found');
-    }
-    
-    // Speed Quiz Button
-    const btnSpeedQuiz = document.getElementById('btn-speed-quiz');
-    if (btnSpeedQuiz) {
-        console.log('✅ Found Speed Quiz button');
-        btnSpeedQuiz.onclick = function() {
-            console.log('⚡ Speed Quiz clicked!');
-            openGameHandler('speed-quiz');
-        };
-    } else {
-        console.log('❌ Speed Quiz button NOT found');
-    }
-    
-    console.log('✅ Game buttons setup complete!');
-}
-
-function openGameHandler(gameType) {
-    console.log('🚀 Opening game:', gameType);
-    const modal = document.getElementById('game-modal');
-    const container = document.getElementById('game-container');
-    
-    if (!modal) {
-        console.error('❌ Game modal not found!');
-        alert('Error: Game modal tidak ditemukan. Silakan refresh halaman.');
-        return;
-    }
-    
-    if (!container) {
-        console.error('❌ Game container not found!');
-        alert('Error: Game container tidak ditemukan. Silakan refresh halaman.');
-        return;
-    }
-    
-    console.log('✅ Modal and container found, initializing game...');
-    
+// ===== DATA MANAGEMENT =====
+function loadData() {
     try {
-        if (gameType === 'quiz-battle') {
-            console.log('Initializing Quiz Battle...');
-            initQuizBattle(container);
-        } else if (gameType === 'memory-match') {
-            console.log('Initializing Memory Match...');
-            initMemoryMatch(container);
-        } else if (gameType === 'speed-quiz') {
-            console.log('Initializing Speed Quiz...');
-            initSpeedQuiz(container);
-        } else {
-            console.error('❌ Unknown game type:', gameType);
-            return;
+        const saved = localStorage.getItem('edunusantara_smp_data_v2');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            appData = { ...appData, ...parsed };
+            console.log('📂 Data loaded from localStorage');
+            showToast('Data berhasil dimuat', 'success');
+        }
+    } catch (error) {
+        console.error('Error loading data:', error);
+        showToast('Menggunakan data demo', 'warning');
+    }
+}
+
+function saveData() {
+    try {
+        localStorage.setItem('edunusantara_smp_data_v2', JSON.stringify(appData));
+        console.log('💾 Data saved to localStorage');
+    } catch (error) {
+        console.error('Error saving data:', error);
+    }
+}
+
+// ===== NAVIGATION ENHANCEMENTS =====
+function highlightActiveNav() {
+    const currentPage = getCurrentPage();
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        
+        if ((currentPage === 'index' || currentPage === '') && href === 'index.html') {
+            link.classList.add('active');
+        } else if (href && href.includes(currentPage + '.html')) {
+            link.classList.add('active');
+        }
+    });
+    
+    // Mobile navigation highlighting
+    const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+    mobileNavItems.forEach(item => {
+        item.classList.remove('active');
+        const href = item.getAttribute('href');
+        
+        if (href && (href === 'index.html' && currentPage === 'index') || 
+            (href && href.includes(currentPage + '.html'))) {
+            item.classList.add('active');
+        }
+    });
+}
+
+function setupNavigationDropdowns() {
+    // Mega menu hover effects
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+    
+    dropdowns.forEach(dropdown => {
+        const megaMenu = dropdown.querySelector('.mega-menu');
+        if (!megaMenu) return;
+        
+        dropdown.addEventListener('mouseenter', () => {
+            megaMenu.style.opacity = '1';
+            megaMenu.style.visibility = 'visible';
+            megaMenu.style.transform = 'translateX(-50%) translateY(0)';
+        });
+        
+        dropdown.addEventListener('mouseleave', () => {
+            megaMenu.style.opacity = '0';
+            megaMenu.style.visibility = 'hidden';
+            megaMenu.style.transform = 'translateX(-50%) translateY(10px)';
+        });
+    });
+    
+    // Mobile dropdown toggle
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-nav-dropdown .dropdown-toggle');
+    
+    mobileDropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('.fa-chevron-down');
+            
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            icon.style.transform = content.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0)';
+        });
+    });
+}
+
+// ===== COMMON FEATURES - ENHANCED =====
+function setupCommonFeatures() {
+    // Setup enhanced navigation
+    setupNavigationDropdowns();
+    
+    // Notification system
+    setupNotificationSystem();
+    
+    // Theme system
+    setupThemeSystem();
+    
+    // Class selection
+    setupClassSelection();
+    
+    // Mobile navigation
+    setupMobileNavigation();
+    
+    // Interactive elements
+    setupInteractiveElements();
+    
+    // Hero animations
+    setupHeroAnimations();
+    
+    // Performance optimizations
+    setupPerformanceOptimizations();
+    
+    // Progress animations
+    animateProgressBars();
+}
+
+function setupNotificationSystem() {
+    const notificationBtn = document.getElementById('notification-btn');
+    const notificationPanel = document.getElementById('notification-panel');
+    const closeNotifications = document.getElementById('close-notifications');
+    const markAllReadBtn = document.getElementById('mark-all-read');
+    
+    if (notificationBtn && notificationPanel) {
+        // Enhanced toggle with animation
+        notificationBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            notificationPanel.classList.toggle('show');
+            
+            if (notificationPanel.classList.contains('show')) {
+                animateNotificationPanel();
+                playSound('notification-open');
+            }
+        });
+        
+        if (closeNotifications) {
+            closeNotifications.addEventListener('click', () => {
+                notificationPanel.classList.remove('show');
+                playSound('notification-close');
+            });
         }
         
-        console.log('✅ Game initialized, showing modal...');
-        modal.classList.add('show');
-        console.log('✅ Modal shown!');
-    } catch (error) {
-        console.error('❌ Error initializing game:', error);
-        alert('Error: ' + error.message);
-    }
-}
-
-// Navigation
-function navigateTo(pageName) {
-    console.log('📍 Navigating to:', pageName);
-    
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-    });
-
-    document.getElementById(pageName).classList.add('active');
-    document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
-
-    if (pageName === 'profile') {
-        updateProfilePage();
-    }
-    
-    if (pageName === 'fun-games') {
-        console.log('🎮 Entering Fun Games page...');
-        updateGameStatsPage();
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!notificationPanel.contains(e.target) && !notificationBtn.contains(e.target)) {
+                notificationPanel.classList.remove('show');
+            }
+        });
         
-        // Setup game buttons dengan delay
-        setTimeout(() => {
-            console.log('⏰ Setting up game buttons after delay...');
-            setupGameButtons();
-        }, 200);
+        // Mark all as read
+        if (markAllReadBtn) {
+            markAllReadBtn.addEventListener('click', async () => {
+                const notificationItems = document.querySelectorAll('.notification-item.new');
+                
+                notificationItems.forEach(item => {
+                    item.classList.remove('new');
+                    const unreadDot = item.querySelector('.notification-unread');
+                    if (unreadDot) unreadDot.remove();
+                });
+                
+                // Update badge
+                updateNotificationBadge(0);
+                
+                // Show confirmation
+                showToast('Semua notifikasi ditandai telah dibaca', 'success');
+                playSound('success');
+            });
+        }
+        
+        // Mark individual as read
+        document.addEventListener('click', (e) => {
+            const notificationItem = e.target.closest('.notification-item');
+            if (notificationItem && notificationItem.classList.contains('new')) {
+                notificationItem.classList.remove('new');
+                const unreadDot = notificationItem.querySelector('.notification-unread');
+                if (unreadDot) unreadDot.remove();
+                
+                // Update badge
+                const unreadCount = document.querySelectorAll('.notification-item.new').length;
+                updateNotificationBadge(unreadCount);
+            }
+        });
+    }
+    
+    // Auto-update notifications
+    setInterval(updateNotifications, 60000);
+}
+
+function updateNotificationBadge(count) {
+    const badge = document.getElementById('notification-count');
+    if (!badge) return;
+    
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'flex' : 'none';
+    
+    // Add animation for new notifications
+    if (count > parseInt(badge.dataset.prevCount || 0)) {
+        badge.classList.add('pulse');
+        setTimeout(() => badge.classList.remove('pulse'), 1000);
+    }
+    
+    badge.dataset.prevCount = count;
+}
+
+function animateNotificationPanel() {
+    const notificationItems = document.querySelectorAll('.notification-item');
+    notificationItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+        item.classList.add('slide-in');
+    });
+}
+
+function setupThemeSystem() {
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    // Load saved theme
+    const savedTheme = localStorage.getItem('edunusantara_theme') || 'dark';
+    document.body.classList.toggle('light-mode', savedTheme === 'light');
+    
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+        icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+        
+        themeToggle.addEventListener('click', function() {
+            const isLightMode = document.body.classList.toggle('light-mode');
+            const icon = this.querySelector('i');
+            
+            if (isLightMode) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('edunusantara_theme', 'light');
+                showToast('Mode terang diaktifkan', 'info');
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('edunusantara_theme', 'dark');
+                showToast('Mode gelap diaktifkan', 'info');
+            }
+            
+            playSound('theme-toggle');
+            saveData();
+        });
+    }
+    
+    // Add smooth transition for theme change
+    document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+}
+
+function setupClassSelection() {
+    const classSelect = document.getElementById('class-select');
+    const classCards = document.querySelectorAll('.class-card');
+    const megaMenuClass = document.getElementById('mega-menu-class');
+    
+    if (classSelect) {
+        classSelect.value = appData.currentClass;
+        
+        // Enhanced change handler
+        classSelect.addEventListener('change', function() {
+            const selectedClass = parseInt(this.value);
+            appData.currentClass = selectedClass;
+            
+            // Update UI elements
+            updateClassDisplay(selectedClass);
+            
+            // Animate change
+            animateClassChange(selectedClass);
+            
+            // Update data
+            saveData();
+            updateDashboard();
+            updateAllProgressBars();
+            
+            // Show feedback
+            showToast(`Kelas ${selectedClass} dipilih`, 'success');
+            playSound('class-change');
+        });
+    }
+    
+    // Class cards interaction
+    classCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const selectedClass = parseInt(this.dataset.class);
+            
+            if (selectedClass === appData.currentClass) return;
+            
+            appData.currentClass = selectedClass;
+            
+            // Update selector
+            if (classSelect) classSelect.value = selectedClass;
+            
+            // Update active state with animation
+            classCards.forEach(c => {
+                c.classList.remove('active');
+                c.style.transform = 'scale(0.95)';
+            });
+            
+            this.classList.add('active');
+            this.style.transform = 'scale(1.05)';
+            
+            // Reset animation
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 300);
+            
+            updateClassDisplay(selectedClass);
+            saveData();
+            updateDashboard();
+            updateAllProgressBars();
+            
+            showToast(`Berpindah ke Kelas ${selectedClass}`, 'success');
+            playSound('click');
+        });
+        
+        // Add hover effects
+        card.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('active')) {
+                this.style.transform = 'translateY(-5px)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            if (!this.classList.contains('active')) {
+                this.style.transform = 'translateY(0)';
+            }
+        });
+    });
+}
+
+function updateClassDisplay(selectedClass) {
+    const classDisplay = document.getElementById('current-class-display');
+    const megaMenuClass = document.getElementById('mega-menu-class');
+    
+    if (classDisplay) {
+        classDisplay.textContent = `Kelas ${selectedClass}`;
+        classDisplay.classList.add('updated');
+        setTimeout(() => classDisplay.classList.remove('updated'), 500);
+    }
+    
+    if (megaMenuClass) {
+        megaMenuClass.textContent = selectedClass;
     }
 }
 
-// Module Toggle
-function toggleModule(moduleNum) {
-    const moduleItem = document.querySelector(`[data-module="${moduleNum}"]`);
-    moduleItem.classList.toggle('active');
+function animateClassChange(selectedClass) {
+    const elements = document.querySelectorAll('[data-class]');
+    elements.forEach(el => {
+        const elClass = parseInt(el.dataset.class);
+        if (elClass === selectedClass) {
+            el.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => el.style.animation = '', 500);
+        }
+    });
 }
 
-// Open Lesson Modal
-function openLesson(lessonId) {
-    const lesson = lessonContent[lessonId];
-    if (!lesson) return;
+function setupMobileNavigation() {
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileClose = document.getElementById('mobile-close');
+    
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function() {
+            mobileNav.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            playSound('menu-open');
+        });
+        
+        if (mobileClose) {
+            mobileClose.addEventListener('click', function() {
+                mobileNav.classList.remove('show');
+                document.body.style.overflow = '';
+                playSound('menu-close');
+            });
+        }
+        
+        // Close on outside click
+        document.addEventListener('click', function(e) {
+            if (mobileNav.classList.contains('show') && 
+                !mobileNav.contains(e.target) && 
+                !hamburger.contains(e.target)) {
+                mobileNav.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileNav.classList.contains('show')) {
+                mobileNav.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+}
 
-    const modal = document.getElementById('lesson-modal');
-    const container = document.getElementById('lesson-container');
+function setupInteractiveElements() {
+    // Quick view buttons
+    document.querySelectorAll('.btn-quick-view').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const course = this.dataset.course;
+            showQuickView(course);
+            playSound('modal-open');
+        });
+    });
+    
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.dataset.filter;
+            
+            // Update active state
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter courses
+            filterCourses(filter);
+            
+            playSound('click');
+        });
+    });
+    
+    // Hero buttons
+    const startLearningBtn = document.getElementById('start-learning');
+    const exploreCoursesBtn = document.getElementById('explore-courses');
+    
+    if (startLearningBtn) {
+        startLearningBtn.addEventListener('click', function() {
+            // Add click animation
+            this.classList.add('clicked');
+            setTimeout(() => this.classList.remove('clicked'), 300);
+            
+            // Start with highest progress subject
+            const subjects = Object.keys(appData.progress);
+            let highestSubject = 'matematika';
+            let highestProgress = 0;
+            
+            subjects.forEach(subject => {
+                const progress = appData.progress[subject][`kelas${appData.currentClass}`] || 0;
+                if (progress > highestProgress) {
+                    highestProgress = progress;
+                    highestSubject = subject;
+                }
+            });
+            
+            // Redirect with animation
+            playSound('navigation');
+            setTimeout(() => {
+                window.location.href = `${highestSubject}.html`;
+            }, 500);
+        });
+    }
+    
+    if (exploreCoursesBtn) {
+        exploreCoursesBtn.addEventListener('click', function() {
+            this.classList.add('clicked');
+            setTimeout(() => this.classList.remove('clicked'), 300);
+            
+            playSound('click');
+            
+            // Smooth scroll to courses
+            const coursesSection = document.querySelector('.courses-section');
+            if (coursesSection) {
+                coursesSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Highlight courses section
+                coursesSection.classList.add('highlighted');
+                setTimeout(() => coursesSection.classList.remove('highlighted'), 2000);
+            }
+        });
+    }
+    
+    // Course card hover effects
+    document.querySelectorAll('.course-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+            this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '';
+        });
+    });
+}
 
-    container.innerHTML = `
-        <div class="lesson-content">
-            <h2>${lesson.title}</h2>
-            ${lesson.content}
+function setupHeroAnimations() {
+    // Floating elements animation
+    const floatingElements = document.querySelectorAll('.floating-element');
+    floatingElements.forEach((el, index) => {
+        el.style.animationDelay = `${index * 0.5}s`;
+        el.style.animation = 'float 3s ease-in-out infinite';
+    });
+    
+    // Pulse animation for circles
+    const pulseCircles = document.querySelectorAll('.pulse-circle');
+    pulseCircles.forEach((circle, index) => {
+        circle.style.animationDelay = `${index * 0.3}s`;
+    });
+    
+    // Stats counter animation
+    animateStatsCounter();
+}
+
+function animateStatsCounter() {
+    const stats = [
+        { element: '.stat-number:nth-child(1)', target: 10, suffix: '' },
+        { element: '.stat-number:nth-child(2)', target: 3, suffix: '' },
+        { element: '.stat-number:nth-child(3)', target: 100, suffix: '+' }
+    ];
+    
+    stats.forEach(stat => {
+        const element = document.querySelector(stat.element);
+        if (!element) return;
+        
+        let current = 0;
+        const increment = stat.target / 30; // 30 frames
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= stat.target) {
+                current = stat.target;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current) + stat.suffix;
+        }, 50);
+    });
+}
+
+function setupPerformanceOptimizations() {
+    // Lazy loading for images
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.add('loaded');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+    
+    // Debounce scroll events
+    let scrollTimer;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+            // Handle scroll-based animations
+            updateScrollAnimations();
+        }, 100);
+    });
+}
+
+// ===== DASHBOARD ENHANCEMENTS =====
+function initializeDashboard() {
+    console.log('📊 Initializing Enhanced Dashboard...');
+    
+    // Initial animations
+    setTimeout(() => {
+        updateDashboard();
+        updateAllProgressBars();
+        updateClassCards();
+        updateLeaderboard('weekly');
+        
+        // Animate elements in sequence
+        animateDashboardElements();
+    }, 500);
+    
+    // Setup study streak
+    checkStudyStreak();
+    
+    // Setup real-time updates
+    setupDashboardUpdates();
+    
+    // Setup enhanced event listeners
+    setupDashboardEventListeners();
+}
+
+function animateDashboardElements() {
+    const elements = [
+        '.hero-section',
+        '.class-cards',
+        '.stats-grid',
+        '.courses-grid',
+        '.events-grid',
+        '.leaderboard-section'
+    ];
+    
+    elements.forEach((selector, index) => {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.style.animationDelay = `${index * 0.2}s`;
+            element.classList.add('fade-in-up');
+        }
+    });
+}
+
+function updateDashboard() {
+    console.log('Updating enhanced dashboard for class', appData.currentClass);
+    
+    // Calculate total progress for current class
+    let totalProgress = 0;
+    let completedSubjects = 0;
+    let totalScore = 0;
+    let subjectCount = 0;
+    
+    Object.keys(appData.progress).forEach(subject => {
+        const progress = appData.progress[subject][`kelas${appData.currentClass}`] || 0;
+        totalProgress += progress;
+        if (progress === 100) completedSubjects++;
+        
+        const score = appData.quizScores[subject][`kelas${appData.currentClass}`];
+        if (score !== null) {
+            totalScore += score;
+        }
+        subjectCount++;
+    });
+    
+    const avgProgress = Math.round(totalProgress / subjectCount);
+    
+    // Update stats with animations
+    updateStatElement('overall-progress-bar', avgProgress);
+    updateStatElement('total-progress', avgProgress, '%');
+    updateStatElement('completed-courses', `${completedSubjects}/${subjectCount}`);
+    updateStatElement('completion-bar', (completedSubjects / subjectCount * 100));
+    updateStatElement('total-score', totalScore);
+    
+    // Update study time
+    const studyTimeEl = document.getElementById('study-time');
+    if (studyTimeEl) {
+        const hours = Math.floor(appData.studyTime / 60);
+        const minutes = appData.studyTime % 60;
+        studyTimeEl.textContent = hours > 0 ? `${hours} jam ${minutes} menit` : `${minutes} menit`;
+    }
+    
+    // Update streak
+    updateStreakDisplay();
+}
+
+function updateStatElement(elementId, value, suffix = '') {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    if (elementId.includes('progress-bar') || elementId.includes('completion-bar')) {
+        // Animate progress bar
+        const currentWidth = parseFloat(element.style.width) || 0;
+        animateValue(currentWidth, value, 1000, (val) => {
+            element.style.width = val + '%';
+        });
+    } else if (elementId.includes('progress') || elementId.includes('score')) {
+        // Animate number counter
+        const currentValue = parseInt(element.textContent) || 0;
+        animateValue(currentValue, value, 1000, (val) => {
+            element.textContent = Math.round(val) + suffix;
+        });
+    } else {
+        element.textContent = value + suffix;
+    }
+}
+
+function animateValue(start, end, duration, callback) {
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = easeOutQuad(progress);
+        const value = start + (end - start) * eased;
+        
+        callback(value);
+        
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+    
+    requestAnimationFrame(update);
+}
+
+function easeOutQuad(t) {
+    return t * (2 - t);
+}
+
+function updateStreakDisplay() {
+    const streakElement = document.querySelector('.streak-days');
+    if (streakElement) {
+        streakElement.textContent = appData.streakDays;
+        
+        // Add streak animation if streak is high
+        if (appData.streakDays >= 7) {
+            streakElement.classList.add('streak-hot');
+        } else if (appData.streakDays >= 3) {
+            streakElement.classList.add('streak-warm');
+        }
+    }
+}
+
+function updateAllProgressBars() {
+    const subjects = ['matematika', 'indonesia', 'ipa', 'ips', 'english', 'ppkn', 'senibudaya', 'pjok', 'prakarya', 'informatika'];
+    
+    subjects.forEach(subject => {
+        const progress = appData.progress[subject][`kelas${appData.currentClass}`] || 0;
+        
+        // Update main course cards
+        updateProgressBar(`${subject}-progress`, progress);
+        updateProgressText(`${subject}-progress-text`, progress);
+        
+        // Update navbar progress
+        updateProgressBar(`nav-${subject}-progress`, progress);
+        updateProgressText(`nav-${subject}-percent`, progress);
+    });
+}
+
+function updateProgressBar(barId, progress) {
+    const bar = document.getElementById(barId);
+    if (bar) {
+        const currentWidth = parseFloat(bar.style.width) || 0;
+        animateValue(currentWidth, progress, 800, (val) => {
+            bar.style.width = val + '%';
+        });
+    }
+}
+
+function updateProgressText(textId, progress) {
+    const text = document.getElementById(textId);
+    if (text) {
+        const currentValue = parseInt(text.textContent) || 0;
+        animateValue(currentValue, progress, 800, (val) => {
+            text.textContent = Math.round(val) + '%';
+        });
+    }
+}
+
+function animateProgressBars() {
+    const progressBars = document.querySelectorAll('.progress-fill');
+    progressBars.forEach((bar, index) => {
+        bar.style.animationDelay = `${index * 0.1}s`;
+        bar.classList.add('progress-animate');
+    });
+}
+
+function setupDashboardUpdates() {
+    // Update dashboard every minute
+    setInterval(updateDashboard, 60000);
+    
+    // Update notifications every 30 seconds
+    setInterval(updateNotifications, 30000);
+    
+    // Simulate real-time updates for demo
+    simulateRealTimeUpdates();
+}
+
+function simulateRealTimeUpdates() {
+    // Simulate progress updates
+    setInterval(() => {
+        if (Math.random() > 0.8) {
+            const subjects = Object.keys(appData.progress);
+            const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
+            const currentProgress = appData.progress[randomSubject][`kelas${appData.currentClass}`] || 0;
+            
+            if (currentProgress < 100) {
+                const newProgress = Math.min(currentProgress + Math.random() * 5, 100);
+                appData.progress[randomSubject][`kelas${appData.currentClass}`] = Math.round(newProgress);
+                
+                // Update UI
+                updateProgressBar(`${randomSubject}-progress`, newProgress);
+                updateProgressText(`${randomSubject}-progress-text`, newProgress);
+                
+                // Show notification
+                if (newProgress % 25 === 0) {
+                    showToast(`Progress ${randomSubject} mencapai ${Math.round(newProgress)}%!`, 'success');
+                }
+                
+                saveData();
+            }
+        }
+    }, 15000);
+}
+
+function setupDashboardEventListeners() {
+    // Leaderboard filter
+    const leaderboardFilter = document.getElementById('leaderboard-filter');
+    if (leaderboardFilter) {
+        leaderboardFilter.addEventListener('change', function() {
+            updateLeaderboard(this.value);
+            playSound('filter-change');
+        });
+    }
+    
+    // Event card interactions
+    document.querySelectorAll('.event-card').forEach(card => {
+        const btn = card.querySelector('.btn-event');
+        if (btn) {
+            btn.addEventListener('click', function() {
+                const eventTitle = card.querySelector('h4').textContent;
+                showToast(`Event "${eventTitle}" ditambahkan ke agenda`, 'success');
+                playSound('event-add');
+                
+                // Add animation
+                this.textContent = '✓ Ditambahkan';
+                this.classList.add('added');
+                setTimeout(() => {
+                    this.textContent = this.textContent.replace('✓ ', '');
+                    this.classList.remove('added');
+                }, 2000);
+            });
+        }
+    });
+}
+
+// ===== QUICK VIEW MODAL - ENHANCED =====
+function showQuickView(course) {
+    const modal = document.getElementById('quick-view-modal');
+    const content = document.getElementById('quick-view-content');
+    
+    const courseNames = {
+        matematika: 'Matematika',
+        indonesia: 'Bahasa Indonesia',
+        ipa: 'IPA',
+        ips: 'IPS',
+        english: 'Bahasa Inggris',
+        ppkn: 'PPKn',
+        senibudaya: 'Seni Budaya',
+        pjok: 'PJOK',
+        prakarya: 'Prakarya',
+        informatika: 'Informatika'
+    };
+    
+    const progress = appData.progress[course][`kelas${appData.currentClass}`] || 0;
+    const score = appData.quizScores[course][`kelas${appData.currentClass}`];
+    const completedLessons = appData.completedLessons[course][`kelas${appData.currentClass}`].length;
+    
+    content.innerHTML = `
+        <div class="quick-view-content">
+            <div class="quick-view-header">
+                <div class="subject-icon-large">
+                    <i class="fas fa-${getSubjectIcon(course)}"></i>
+                </div>
+                <div>
+                    <h2>${courseNames[course]}</h2>
+                    <p class="subject-class">Kelas ${appData.currentClass}</p>
+                </div>
+            </div>
+            
+            <div class="quick-stats-grid">
+                <div class="quick-stat">
+                    <div class="stat-circle" style="--progress: ${progress}%">
+                        <span class="stat-value">${progress}%</span>
+                    </div>
+                    <span class="stat-label">Progress</span>
+                </div>
+                <div class="quick-stat">
+                    <div class="stat-circle" style="--progress: ${score || 0}%">
+                        <span class="stat-value">${score || '-'}</span>
+                    </div>
+                    <span class="stat-label">Nilai Quiz</span>
+                </div>
+                <div class="quick-stat">
+                    <div class="stat-circle">
+                        <span class="stat-value">${completedLessons}/5</span>
+                    </div>
+                    <span class="stat-label">Materi Selesai</span>
+                </div>
+            </div>
+            
+            <div class="progress-breakdown">
+                <h3>Detail Progress</h3>
+                ${getProgressBreakdown(course)}
+            </div>
+            
+            <div class="quick-actions">
+                <a href="${course}.html?kelas=${appData.currentClass}" class="btn-course primary">
+                    <i class="fas fa-play-circle"></i> Lanjutkan Belajar
+                </a>
+                <button class="btn-course secondary" onclick="startQuiz('${course}')">
+                    <i class="fas fa-question-circle"></i> Kerjakan Quiz
+                </button>
+                <button class="btn-course outline" onclick="showCourseDetails('${course}')">
+                    <i class="fas fa-info-circle"></i> Detail Materi
+                </button>
+            </div>
         </div>
     `;
-
+    
     modal.classList.add('show');
-}
-
-// Close Lesson Modal
-function closeLesson() {
-    const modal = document.getElementById('lesson-modal');
-    modal.classList.remove('show');
-}
-
-// Lesson Completion
-function handleLessonComplete(checkbox) {
-    const course = checkbox.dataset.course;
-    const lesson = checkbox.dataset.lesson;
-
-    if (checkbox.checked) {
-        if (!appData.completedLessons[course].includes(lesson)) {
-            appData.completedLessons[course].push(lesson);
-        }
-    } else {
-        const index = appData.completedLessons[course].indexOf(lesson);
-        if (index > -1) {
-            appData.completedLessons[course].splice(index, 1);
-        }
+    
+    // Animate modal entrance
+    setTimeout(() => {
+        content.classList.add('loaded');
+    }, 100);
+    
+    // Setup close button
+    const closeBtn = document.getElementById('close-quick-view');
+    if (closeBtn) {
+        closeBtn.onclick = () => closeQuickView();
     }
-
-    updateProgress();
-    updateDashboard();
-    checkAchievements();
+    
+    // Close on escape
+    document.addEventListener('keydown', function quickViewKeyHandler(e) {
+        if (e.key === 'Escape') {
+            closeQuickView();
+            document.removeEventListener('keydown', quickViewKeyHandler);
+        }
+    });
 }
 
-// Progress Calculation
-function updateProgress() {
-    const totalLessons = {
-        math: 3,
-        ppkn: 3
+function getSubjectIcon(subject) {
+    const icons = {
+        matematika: 'calculator',
+        indonesia: 'book',
+        ipa: 'flask',
+        ips: 'globe-asia',
+        english: 'language',
+        ppkn: 'landmark',
+        senibudaya: 'palette',
+        pjok: 'running',
+        prakarya: 'hammer',
+        informatika: 'laptop-code'
     };
-
-    appData.progress.math = Math.round((appData.completedLessons.math.length / totalLessons.math) * 100);
-    appData.progress.ppkn = Math.round((appData.completedLessons.ppkn.length / totalLessons.ppkn) * 100);
-
-    document.getElementById('math-progress').style.width = appData.progress.math + '%';
-    document.getElementById('ppkn-progress').style.width = appData.progress.ppkn + '%';
+    return icons[subject] || 'book';
 }
 
-// Dashboard Updates
-function updateDashboard() {
-    const totalProgress = Math.round((appData.progress.math + appData.progress.ppkn) / 2);
-    document.getElementById('total-progress').textContent = totalProgress + '%';
-
-    let completedCourses = 0;
-    if (appData.progress.math === 100) completedCourses++;
-    if (appData.progress.ppkn === 100) completedCourses++;
-    document.getElementById('completed-courses').textContent = completedCourses + '/2';
-
-    let totalScore = 0;
-    if (appData.quizScores.math !== null) totalScore += appData.quizScores.math;
-    if (appData.quizScores.ppkn !== null) totalScore += appData.quizScores.ppkn;
-    document.getElementById('total-score').textContent = totalScore;
+function getProgressBreakdown(course) {
+    const modules = getCourseModules(course);
+    const completed = appData.completedLessons[course][`kelas${appData.currentClass}`];
+    
+    return modules.map((module, index) => `
+        <div class="module-progress-item ${completed.includes(`lesson-${index}`) ? 'completed' : ''}">
+            <div class="module-check">
+                <i class="fas fa-${completed.includes(`lesson-${index}`) ? 'check-circle' : 'circle'}"></i>
+            </div>
+            <div class="module-info">
+                <span class="module-name">${module}</span>
+                <div class="module-status">
+                    ${completed.includes(`lesson-${index}`) ? 
+                        '<span class="status-completed">✓ Selesai</span>' : 
+                        '<span class="status-pending">● Belum dimulai</span>'}
+                </div>
+            </div>
+            <button class="btn-module" onclick="openLesson('${course}', 'lesson-${index}')">
+                <i class="fas fa-play"></i>
+            </button>
+        </div>
+    `).join('');
 }
 
-// Quiz System
-let currentQuiz = null;
-let currentAnswers = [];
+function closeQuickView() {
+    const modal = document.getElementById('quick-view-modal');
+    const content = document.getElementById('quick-view-content');
+    
+    content.classList.remove('loaded');
+    
+    setTimeout(() => {
+        modal.classList.remove('show');
+    }, 300);
+    
+    playSound('modal-close');
+}
 
-function startQuiz(subject) {
-    currentQuiz = subject;
-    currentAnswers = new Array(quizData[subject].length).fill(null);
+// ===== LEADERBOARD ENHANCEMENTS =====
+function updateLeaderboard(period) {
+    const leaderboardList = document.querySelector('.leaderboard-list');
+    if (!leaderboardList) return;
     
-    const modal = document.getElementById('quiz-modal');
-    const container = document.getElementById('quiz-container');
+    // Show loading state
+    leaderboardList.innerHTML = `
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Memuat data peringkat...</p>
+        </div>
+    `;
     
-    let quizHTML = `<h2>Kuis ${subject === 'math' ? 'Matematika' : 'PPKn'} Kelas 12</h2>`;
+    // Simulate API delay
+    setTimeout(() => {
+        const leaderboardData = getLeaderboardData(period);
+        renderLeaderboard(leaderboardData, leaderboardList);
+    }, 800);
+}
+
+function getLeaderboardData(period) {
+    // Sample data - in real app, this would come from API
+    return [
+        { id: 1, name: 'Siti Nurhaliza', class: '9A', avatar: 'S', points: 3120, games: 45, rank: 1, isCurrentUser: false },
+        { id: 2, name: 'Budi Santoso', class: '8B', avatar: 'B', points: 2870, games: 38, rank: 2, isCurrentUser: false },
+        { id: 3, name: 'Ahmad Rizki', class: '7C', avatar: 'A', points: 2650, games: 42, rank: 3, isCurrentUser: false },
+        { id: 4, name: 'Andi Wijaya', class: '9A', avatar: 'A', points: 2450, games: 35, rank: 4, isCurrentUser: false },
+        { id: 5, name: 'Rina Agustina', class: '8C', avatar: 'R', points: 2300, games: 31, rank: 5, isCurrentUser: false },
+        { id: 6, name: 'Dedi Kurniawan', class: '7B', avatar: 'D', points: 2150, games: 28, rank: 6, isCurrentUser: false },
+        { id: 7, name: 'Maya Sari', class: '9B', avatar: 'M', points: 2000, games: 25, rank: 7, isCurrentUser: false },
+        { id: 8, name: 'Fajar Nugroho', class: '8A', avatar: 'F', points: 1850, games: 28, rank: 8, isCurrentUser: true }
+    ];
+}
+
+function renderLeaderboard(data, container) {
+    let html = '';
     
-    quizData[subject].forEach((q, index) => {
-        quizHTML += `
-            <div class="quiz-question">
-                <h3>Pertanyaan ${index + 1}</h3>
-                <p>${q.question}</p>
-                <div class="quiz-options">
-                    ${q.options.map((opt, optIndex) => `
-                        <div class="quiz-option" onclick="selectAnswer(${index}, ${optIndex})">
-                            ${String.fromCharCode(65 + optIndex)}. ${opt}
+    data.forEach(student => {
+        const isYou = student.isCurrentUser;
+        
+        html += `
+            <div class="leaderboard-item ${isYou ? 'you' : ''}" data-id="${student.id}">
+                <div class="rank ${student.rank <= 3 ? 'top-rank' : ''}">
+                    ${student.rank}
+                </div>
+                <div class="student-info">
+                    <div class="student-avatar ${isYou ? 'current-user' : ''}">
+                        ${student.avatar}
+                        ${student.rank === 1 ? '<i class="crown fas fa-crown"></i>' : ''}
+                    </div>
+                    <div class="student-details">
+                        <h4>${student.name} ${isYou ? '<span class="you-badge">(Kamu)</span>' : ''}</h4>
+                        <p class="student-class">${student.class} • ${student.games} game dimainkan</p>
+                        <div class="student-stats">
+                            <span class="win-rate">${Math.floor(Math.random() * 30) + 70}% win rate</span>
+                            <span class="streak">${Math.floor(Math.random() * 10) + 1}🔥</span>
                         </div>
-                    `).join('')}
+                    </div>
+                </div>
+                <div class="score">
+                    <div class="score-value">${student.points}</div>
+                    <div class="score-label">points</div>
                 </div>
             </div>
         `;
     });
     
-    quizHTML += `
-        <button class="btn btn-primary quiz-submit" onclick="submitQuiz()">
-            Submit Jawaban
-        </button>
-    `;
+    container.innerHTML = html;
     
-    container.innerHTML = quizHTML;
-    modal.classList.add('show');
+    // Add animations
+    setTimeout(() => {
+        const items = container.querySelectorAll('.leaderboard-item');
+        items.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+            item.classList.add('slide-in-right');
+        });
+    }, 100);
 }
 
-function selectAnswer(questionIndex, optionIndex) {
-    currentAnswers[questionIndex] = optionIndex;
+// ===== ENHANCED FILTERING =====
+function filterCourses(filter) {
+    const courseCards = document.querySelectorAll('.course-card');
+    const filterValue = filter === 'all' ? filter : filter.replace('kelas-', '');
     
-    const questionDiv = document.querySelectorAll('.quiz-question')[questionIndex];
-    const options = questionDiv.querySelectorAll('.quiz-option');
-    
-    options.forEach((opt, idx) => {
-        opt.classList.remove('selected');
-        if (idx === optionIndex) {
-            opt.classList.add('selected');
+    // Animate filtering
+    courseCards.forEach(card => {
+        const classData = card.dataset.class;
+        const shouldShow = filter === 'all' || classData.includes(filterValue);
+        
+        if (shouldShow) {
+            card.style.display = 'block';
+            setTimeout(() => {
+                card.classList.add('visible');
+            }, 100);
+        } else {
+            card.classList.remove('visible');
+            setTimeout(() => {
+                card.style.display = 'none';
+            }, 300);
         }
     });
+    
+    // Update counter
+    const visibleCount = document.querySelectorAll('.course-card.visible').length;
+    updateCourseCounter(visibleCount);
 }
 
-function submitQuiz() {
-    if (currentAnswers.includes(null)) {
-        alert('Mohon jawab semua pertanyaan terlebih dahulu!');
+function updateCourseCounter(count) {
+    let counter = document.getElementById('course-counter');
+    if (!counter) {
+        counter = document.createElement('div');
+        counter.id = 'course-counter';
+        counter.className = 'course-counter';
+        document.querySelector('.courses-section .section-header').appendChild(counter);
+    }
+    
+    const total = document.querySelectorAll('.course-card').length;
+    counter.textContent = `${count} dari ${total} mata pelajaran`;
+    counter.classList.add('updated');
+    
+    setTimeout(() => counter.classList.remove('updated'), 500);
+}
+
+// ===== STUDY STREAK SYSTEM =====
+function checkStudyStreak() {
+    const today = new Date().toDateString();
+    
+    if (!appData.lastStudyDate) {
+        appData.lastStudyDate = today;
+        appData.streakDays = 1;
+        saveData();
         return;
     }
     
-    let correctCount = 0;
-    quizData[currentQuiz].forEach((q, index) => {
-        if (currentAnswers[index] === q.correct) {
-            correctCount++;
+    if (appData.lastStudyDate === today) return;
+    
+    const lastDate = new Date(appData.lastStudyDate);
+    const currentDate = new Date(today);
+    const diffTime = Math.abs(currentDate - lastDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) {
+        // Consecutive day
+        appData.streakDays++;
+        showStreakNotification(appData.streakDays);
+    } else if (diffDays > 1) {
+        // Streak broken
+        if (appData.streakDays > 1) {
+            showToast(`Streak ${appData.streakDays} hari terputus!`, 'warning');
+        }
+        appData.streakDays = 1;
+    }
+    
+    appData.lastStudyDate = today;
+    saveData();
+    updateStreakDisplay();
+}
+
+function showStreakNotification(streakDays) {
+    if (streakDays === 1) return;
+    
+    const messages = {
+        3: "🔥 Streak 3 hari! Pertahankan!",
+        7: "🎉 Streak 1 minggu! Luar biasa!",
+        14: "🚀 Streak 2 minggu! Kamu hebat!",
+        30: "🏆 Streak 1 bulan! Legenda!"
+    };
+    
+    if (messages[streakDays]) {
+        showToast(messages[streakDays], 'success');
+        playSound('achievement');
+    } else if (streakDays % 5 === 0) {
+        showToast(`Streak ${streakDays} hari! Teruskan!`, 'info');
+    }
+}
+
+// ===== ACHIEVEMENT SYSTEM =====
+function checkAchievements() {
+    const achievements = getAchievementDefinitions();
+    const unlocked = [];
+    
+    achievements.forEach(achievement => {
+        if (!appData.achievements.includes(achievement.id) && achievement.condition()) {
+            appData.achievements.push(achievement.id);
+            unlocked.push(achievement);
         }
     });
     
-    const score = Math.round((correctCount / quizData[currentQuiz].length) * 100);
-    appData.quizScores[currentQuiz] = score;
+    if (unlocked.length > 0) {
+        showAchievementNotification(unlocked);
+        saveData();
+    }
+}
+
+function getAchievementDefinitions() {
+    return [
+        {
+            id: 'pemula',
+            title: 'Pemula',
+            description: 'Selesaikan 1 materi pertama',
+            icon: '🥚',
+            condition: () => {
+                let totalLessons = 0;
+                Object.keys(appData.completedLessons).forEach(subject => {
+                    totalLessons += appData.completedLessons[subject][`kelas${appData.currentClass}`].length;
+                });
+                return totalLessons >= 1;
+            }
+        },
+        {
+            id: 'rajin',
+            title: 'Rajin Belajar',
+            description: 'Selesaikan 10 materi',
+            icon: '📚',
+            condition: () => {
+                let totalLessons = 0;
+                Object.keys(appData.completedLessons).forEach(subject => {
+                    totalLessons += appData.completedLessons[subject][`kelas${appData.currentClass}`].length;
+                });
+                return totalLessons >= 10;
+            }
+        },
+        {
+            id: 'quiz-master',
+            title: 'Quiz Master',
+            description: 'Dapatkan nilai 90+ di quiz',
+            icon: '🏆',
+            condition: () => {
+                let hasHighScore = false;
+                Object.keys(appData.quizScores).forEach(subject => {
+                    const score = appData.quizScores[subject][`kelas${appData.currentClass}`];
+                    if (score >= 90) hasHighScore = true;
+                });
+                return hasHighScore;
+            }
+        }
+    ];
+}
+
+function showAchievementNotification(achievements) {
+    achievements.forEach((achievement, index) => {
+        setTimeout(() => {
+            const notification = document.createElement('div');
+            notification.className = 'achievement-notification';
+            notification.innerHTML = `
+                <div class="achievement-icon">${achievement.icon}</div>
+                <div class="achievement-content">
+                    <h4>🏆 Achievement Unlocked!</h4>
+                    <h3>${achievement.title}</h3>
+                    <p>${achievement.description}</p>
+                </div>
+                <button class="close-achievement">&times;</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 5000);
+            
+            // Close button
+            notification.querySelector('.close-achievement').onclick = () => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            };
+            
+            // Play sound
+            playSound('achievement');
+            
+        }, index * 500);
+    });
+}
+
+// ===== AUDIO FEEDBACK =====
+function playSound(type) {
+    if (!window.audioEnabled) return;
     
-    const resultDiv = document.getElementById(`${currentQuiz}-quiz-result`);
-    resultDiv.innerHTML = `
-        <h3>Hasil Kuis</h3>
-        <p style="font-size: 2.5rem; color: var(--primary-color); font-weight: bold; margin: 1rem 0;">${score}</p>
-        <p style="font-size: 1.2rem;">Jawaban benar: ${correctCount} dari ${quizData[currentQuiz].length}</p>
-        <p style="font-size: 1.3rem; margin: 1rem 0;">${score >= 80 ? '🎉 Luar biasa! Nilai sempurna!' : score >= 60 ? '👍 Bagus! Terus tingkatkan!' : '💪 Tetap semangat! Coba lagi!'}</p>
-        ${score < 100 ? `<button class="btn btn-retry" onclick="retryQuiz('${currentQuiz}')">🔄 Coba Lagi</button>` : ''}
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    switch(type) {
+        case 'click':
+            playTone(440, 0.1, 'sine');
+            break;
+        case 'success':
+            playTone(523.25, 0.3, 'sine');
+            break;
+        case 'notification-open':
+            playTone(659.25, 0.2, 'sine');
+            break;
+        case 'achievement':
+            playTone(783.99, 0.5, 'triangle');
+            break;
+        case 'theme-toggle':
+            playTone(587.33, 0.2, 'sawtooth');
+            break;
+    }
+}
+
+function playTone(frequency, duration, type) {
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = type;
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + duration);
+    } catch (error) {
+        console.log('Audio not supported');
+    }
+}
+
+// ===== TOAST NOTIFICATIONS =====
+function showToast(message, type = 'info') {
+    // Remove existing toasts
+    document.querySelectorAll('.toast').forEach(toast => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    });
+    
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `
+        <div class="toast-icon">
+            <i class="fas fa-${getToastIcon(type)}"></i>
+        </div>
+        <div class="toast-content">${message}</div>
+        <button class="toast-close">&times;</button>
     `;
-    resultDiv.classList.add('show');
     
-    closeQuiz();
-    updateDashboard();
-    checkAchievements();
+    document.body.appendChild(toast);
+    
+    // Show toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    // Auto-remove after 5 seconds
+    const timeout = setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                document.body.removeChild(toast);
+            }
+        }, 300);
+    }, 5000);
+    
+    // Close button
+    toast.querySelector('.toast-close').onclick = () => {
+        clearTimeout(timeout);
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                document.body.removeChild(toast);
+            }
+        }, 300);
+    };
 }
 
-function retryQuiz(subject) {
-    const resultDiv = document.getElementById(`${subject}-quiz-result`);
-    resultDiv.classList.remove('show');
-    startQuiz(subject);
+function getToastIcon(type) {
+    const icons = {
+        success: 'check-circle',
+        error: 'exclamation-circle',
+        warning: 'exclamation-triangle',
+        info: 'info-circle'
+    };
+    return icons[type] || 'info-circle';
 }
 
-function closeQuiz() {
-    const modal = document.getElementById('quiz-modal');
-    modal.classList.remove('show');
-    currentQuiz = null;
-    currentAnswers = [];
+// ===== KEYBOARD SHORTCUTS =====
+function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', function(e) {
+        // Don't trigger shortcuts when typing in inputs
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        
+        switch(e.key.toLowerCase()) {
+            case '1':
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    appData.currentClass = 7;
+                    updateClassDisplay(7);
+                    updateDashboard();
+                    showToast('Pindah ke Kelas 7', 'info');
+                }
+                break;
+                
+            case '2':
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    appData.currentClass = 8;
+                    updateClassDisplay(8);
+                    updateDashboard();
+                    showToast('Pindah ke Kelas 8', 'info');
+                }
+                break;
+                
+            case '3':
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    appData.currentClass = 9;
+                    updateClassDisplay(9);
+                    updateDashboard();
+                    showToast('Pindah ke Kelas 9', 'info');
+                }
+                break;
+                
+            case 'n':
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    const notificationBtn = document.getElementById('notification-btn');
+                    if (notificationBtn) notificationBtn.click();
+                }
+                break;
+                
+            case 't':
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    const themeToggle = document.getElementById('theme-toggle');
+                    if (themeToggle) themeToggle.click();
+                }
+                break;
+                
+            case 'escape':
+                closeAllModals();
+                break;
+                
+            case 'f':
+                if (e.ctrlKey && e.shiftKey) {
+                    e.preventDefault();
+                    const searchInput = document.querySelector('.search-input');
+                    if (searchInput) searchInput.focus();
+                }
+                break;
+        }
+    });
 }
 
-// Profile Page
-function updateProfilePage() {
-    const totalCompleted = appData.completedLessons.math.length + appData.completedLessons.ppkn.length;
-    document.getElementById('total-lessons').textContent = `${totalCompleted}/6`;
+// ===== PERFORMANCE MONITORING =====
+function setupPerformanceMonitoring() {
+    if ('performance' in window) {
+        // Monitor page load performance
+        const timing = performance.timing;
+        const loadTime = timing.loadEventEnd - timing.navigationStart;
+        
+        if (loadTime > 3000) {
+            console.warn(`Page load time: ${loadTime}ms - Consider optimizing`);
+        }
+    }
     
-    let scores = [];
-    if (appData.quizScores.math !== null) scores.push(appData.quizScores.math);
-    if (appData.quizScores.ppkn !== null) scores.push(appData.quizScores.ppkn);
-    const avgScore = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
-    document.getElementById('average-score').textContent = avgScore;
+    // Monitor FPS
+    let frameCount = 0;
+    let lastTime = performance.now();
     
-    const hours = Math.floor(appData.studyTime / 60);
-    const minutes = appData.studyTime % 60;
-    document.getElementById('study-time').textContent = hours > 0 ? `${hours} jam ${minutes} menit` : `${minutes} menit`;
+    function checkFPS(currentTime) {
+        frameCount++;
+        
+        if (currentTime - lastTime >= 1000) {
+            const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+            frameCount = 0;
+            lastTime = currentTime;
+            
+            if (fps < 30) {
+                console.warn(`Low FPS: ${fps}`);
+            }
+        }
+        
+        requestAnimationFrame(checkFPS);
+    }
+    
+    requestAnimationFrame(checkFPS);
 }
 
-// Achievements System
-function checkAchievements() {
-    const achievements = document.querySelectorAll('.achievement-item');
+// ===== SCROLL ANIMATIONS =====
+function updateScrollAnimations() {
+    const elements = document.querySelectorAll('.animate-on-scroll');
     
-    const totalLessons = appData.completedLessons.math.length + appData.completedLessons.ppkn.length;
-    if (totalLessons > 0 && !appData.achievements.includes('pemula')) {
-        achievements[0].classList.remove('locked');
-        achievements[0].classList.add('unlocked');
-        appData.achievements.push('pemula');
-    }
-    
-    if (totalLessons >= 3 && !appData.achievements.includes('rajin')) {
-        achievements[1].classList.remove('locked');
-        achievements[1].classList.add('unlocked');
-        appData.achievements.push('rajin');
-    }
-    
-    if ((appData.quizScores.math === 100 || appData.quizScores.ppkn === 100) && !appData.achievements.includes('sempurna')) {
-        achievements[2].classList.remove('locked');
-        achievements[2].classList.add('unlocked');
-        appData.achievements.push('sempurna');
-    }
-    
-    if (appData.progress.math === 100 && appData.progress.ppkn === 100 && !appData.achievements.includes('lulus')) {
-        achievements[3].classList.remove('locked');
-        achievements[3].classList.add('unlocked');
-        appData.achievements.push('lulus');
-    }
+    elements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight * 0.8;
+        
+        if (isVisible) {
+            element.classList.add('animated');
+        }
+    });
 }
 
-// Study Timer
-function startStudyTimer() {
-    setInterval(() => {
-        appData.studyTime++;
-    }, 60000);
-}
+// ===== INITIALIZE =====
+// Enable audio by default
+window.audioEnabled = true;
 
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const quizModal = document.getElementById('quiz-modal');
-    const lessonModal = document.getElementById('lesson-modal');
-    const gameModal = document.getElementById('game-modal');
-    if (event.target === quizModal) {
-        closeQuiz();
+// Add CSS for animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-    if (event.target === lessonModal) {
-        closeLesson();
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
     }
-    if (event.target === gameModal) {
-        closeGame();
+    
+    @keyframes progress-animation {
+        from {
+            width: 0;
+        }
     }
-}
+    
+    .fade-in-up {
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+    }
+    
+    .slide-in-right {
+        animation: slideInRight 0.4s ease forwards;
+        opacity: 0;
+    }
+    
+    .progress-animate {
+        animation: progress-animation 1s ease-out;
+    }
+    
+    .pulse {
+        animation: pulse 0.5s ease;
+    }
+    
+    .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--dark-light);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        min-width: 300px;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        z-index: 9999;
+        backdrop-filter: blur(10px);
+    }
+    
+    .toast.show {
+        transform: translateX(0);
+    }
+    
+    .toast-success {
+        border-left: 4px solid var(--success);
+    }
+    
+    .toast-error {
+        border-left: 4px solid var(--danger);
+    }
+    
+    .toast-warning {
+        border-left: 4px solid var(--warning);
+    }
+    
+    .toast-info {
+        border-left: 4px solid var(--secondary);
+    }
+    
+    .achievement-notification {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-100px);
+        background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        min-width: 400px;
+        box-shadow: var(--shadow-xl);
+        z-index: 10000;
+        transition: transform 0.3s ease;
+    }
+    
+    .achievement-notification.show {
+        transform: translateX(-50%) translateY(0);
+    }
+    
+    .achievement-icon {
+        font-size: 3rem;
+    }
+    
+    .course-card {
+        transition: all 0.3s ease;
+    }
+    
+    .course-card.visible {
+        opacity: 1;
+    }
+    
+    .course-counter {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+        transition: all 0.3s ease;
+    }
+    
+    .course-counter.updated {
+        color: var(--secondary);
+        transform: scale(1.05);
+    }
+`;
+document.head.appendChild(style);
 
-// Keyboard shortcuts
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeQuiz();
-        closeLesson();
-        closeGame();
-    }
-});
+console.log('🚀 EduNusantara SMP Platform Ready with Enhanced Features!');
 
-// Game System
-const gameQuestions = {
-    all: [
-        { q: "Turunan dari f(x) = 3x² adalah...", opts: ["6x", "3x", "6x²", "9x"], ans: 0, subj: "MTK" },
-        { q: "∫2x dx = ...", opts: ["x² + C", "2x² + C", "x + C", "2x + C"], ans: 0, subj: "MTK" },
-        { q: "Determinan [2 1; 3 4] adalah...", opts: ["5", "8", "11", "2"], ans: 0, subj: "MTK" },
-        { q: "Arti Bhineka Tunggal Ika adalah...", opts: ["Berbeda-beda tetap satu", "Satu untuk semua", "Persatuan", "Keberagaman"], ans: 0, subj: "PKN" },
-        { q: "ASEAN didirikan tahun...", opts: ["1967", "1945", "1950", "1970"], ans: 0, subj: "PKN" },
-        { q: "Politik luar negeri Indonesia adalah...", opts: ["Bebas Aktif", "Liberal", "Sosialis", "Netral"], ans: 0, subj: "PKN" },
-        { q: "f'(x⁴) = ...", opts: ["4x³", "x³", "4x⁴", "x⁵"], ans: 0, subj: "MTK" },
-        { q: "Semboyan Bhineka berasal dari kitab...", opts: ["Sutasoma", "Ramayana", "Mahabharata", "Negarakertagama"], ans: 0, subj: "PKN" },
-        { q: "Integral dari 3 adalah...", opts: ["3x + C", "3", "0", "x + C"], ans: 0, subj: "MTK" },
-        { q: "Indonesia keluar dari PBB tahun...", opts: ["1965", "1960", "1970", "1950"], ans: 0, subj: "PKN" },
-        { q: "Turunan konstanta adalah...", opts: ["0", "1", "∞", "C"], ans: 0, subj: "MTK" },
-        { q: "Demokrasi Pancasila mengutamakan...", opts: ["Musyawarah mufakat", "Voting", "Kekuasaan mayoritas", "Kebebasan mutlak"], ans: 0, subj: "PKN" }
-    ]
+// Export functions to global scope
+window.showAllSubjects = function() {
+    // Your existing function implementation
+    const modal = document.getElementById('all-subjects-modal');
+    const grid = document.getElementById('all-subjects-grid');
+    
+    if (!modal || !grid) return;
+    
+    const allSubjects = [
+        { name: 'Matematika', icon: 'calculator', color: 'math' },
+        { name: 'Bahasa Indonesia', icon: 'book', color: 'indonesia' },
+        { name: 'IPA', icon: 'flask', color: 'ipa' },
+        { name: 'IPS', icon: 'globe-asia', color: 'ips' },
+        { name: 'Bahasa Inggris', icon: 'language', color: 'english' },
+        { name: 'PPKn', icon: 'landmark', color: 'ppkn' },
+        { name: 'Seni Budaya', icon: 'palette', color: 'seni' },
+        { name: 'PJOK', icon: 'running', color: 'pjok' },
+        { name: 'Prakarya', icon: 'hammer', color: 'prakarya' },
+        { name: 'Informatika', icon: 'laptop-code', color: 'informatika' }
+    ];
+    
+    let html = '';
+    allSubjects.forEach(subject => {
+        const subjectKey = subject.name.toLowerCase().replace(' ', '');
+        const progress = appData.progress[subjectKey]?.[`kelas${appData.currentClass}`] || 0;
+        
+        html += `
+            <a href="${subjectKey}.html" class="subject-card">
+                <i class="fas fa-${subject.icon}" style="color: var(--${subject.color})"></i>
+                <h4>${subject.name}</h4>
+                <div class="subject-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progress}%; background: var(--${subject.color})"></div>
+                    </div>
+                    <span class="progress-text">${progress}%</span>
+                </div>
+            </a>
+        `;
+    });
+    
+    grid.innerHTML = html;
+    modal.classList.add('show');
+    playSound('modal-open');
 };
 
-function updateGameStats() {
-    const quizBattleBest = document.getElementById('quiz-battle-best');
-    const quizBattlePlayed = document.getElementById('quiz-battle-played');
-    const memoryBest = document.getElementById('memory-best');
-    const memoryPlayed = document.getElementById('memory-played');
-    const speedBest = document.getElementById('speed-best');
-    const speedPlayed = document.getElementById('speed-played');
-    
-    if (quizBattleBest) quizBattleBest.textContent = appData.gameStats.quizBattle.bestScore;
-    if (quizBattlePlayed) quizBattlePlayed.textContent = appData.gameStats.quizBattle.played;
-    if (memoryBest) memoryBest.textContent = appData.gameStats.memoryMatch.bestTime || '-';
-    if (memoryPlayed) memoryPlayed.textContent = appData.gameStats.memoryMatch.played;
-    if (speedBest) speedBest.textContent = appData.gameStats.speedQuiz.bestScore;
-    if (speedPlayed) speedPlayed.textContent = appData.gameStats.speedQuiz.played;
-    
-    updateGameStatsPage();
-}
-
-function updateGameStatsPage() {
-    const quizBattleBestPage = document.getElementById('quiz-battle-best-page');
-    const quizBattlePlayedPage = document.getElementById('quiz-battle-played-page');
-    const memoryBestPage = document.getElementById('memory-best-page');
-    const memoryPlayedPage = document.getElementById('memory-played-page');
-    const speedBestPage = document.getElementById('speed-best-page');
-    const speedPlayedPage = document.getElementById('speed-played-page');
-    
-    if (quizBattleBestPage) quizBattleBestPage.textContent = appData.gameStats.quizBattle.bestScore;
-    if (quizBattlePlayedPage) quizBattlePlayedPage.textContent = appData.gameStats.quizBattle.played;
-    if (memoryBestPage) memoryBestPage.textContent = appData.gameStats.memoryMatch.bestTime || '-';
-    if (memoryPlayedPage) memoryPlayedPage.textContent = appData.gameStats.memoryMatch.played;
-    if (speedBestPage) speedBestPage.textContent = appData.gameStats.speedQuiz.bestScore;
-    if (speedPlayedPage) speedPlayedPage.textContent = appData.gameStats.speedQuiz.played;
-}
-
-function openGame(gameType) {
-    console.log('⚠️ openGame called (legacy):', gameType);
-    openGameHandler(gameType);
-}
-
-// Make functions available globally
-window.openGame = openGame;
-window.closeGame = closeGame;
-window.selectBattleCell = selectBattleCell;
-window.answerBattle = answerBattle;
-window.initQuizBattle = initQuizBattle;
-window.flipMemoryCard = flipMemoryCard;
-window.initMemoryMatch = initMemoryMatch;
-window.answerSpeed = answerSpeed;
-window.initSpeedQuiz = initSpeedQuiz;
-
-function closeGame() {
-    const modal = document.getElementById('game-modal');
+window.closeAllSubjects = function() {
+    const modal = document.getElementById('all-subjects-modal');
     if (modal) {
         modal.classList.remove('show');
+        playSound('modal-close');
     }
-    
-    // Clear any running timers
-    if (memoryState.timer) {
-        clearInterval(memoryState.timer);
-        memoryState.timer = null;
-    }
-    if (speedState.timer) {
-        clearInterval(speedState.timer);
-        speedState.timer = null;
-    }
-}
-
-// Quiz Battle (Tic-Tac-Toe)
-let battleState = {
-    board: Array(9).fill(null),
-    currentPlayer: 'X',
-    gameOver: false,
-    currentCell: null,
-    score: { X: 0, O: 0 }
 };
 
-function initQuizBattle(container) {
-    battleState = {
-        board: Array(9).fill(null),
-        currentPlayer: 'X',
-        gameOver: false,
-        currentCell: null,
-        score: { X: 0, O: 0 }
-    };
-    
-    renderQuizBattle(container);
-}
-
-function renderQuizBattle(container) {
-    container.innerHTML = `
-        <div class="quiz-battle-container">
-            <h2>🎯 Quiz Battle</h2>
-            <p>Jawab pertanyaan dengan benar untuk mengisi kotak!</p>
-            
-            <div class="battle-info">
-                <div>
-                    <h3 class="player-x">X (Kamu)</h3>
-                    <p>Score: ${battleState.score.X}</p>
-                </div>
-                <div>
-                    <h3 class="player-o">O (AI)</h3>
-                    <p>Score: ${battleState.score.O}</p>
-                </div>
-            </div>
-            
-            <div class="tic-tac-toe-board" id="battle-board">
-                ${battleState.board.map((cell, i) => `
-                    <div class="tic-cell ${cell ? 'filled ' + cell.toLowerCase() : ''}" 
-                         onclick="selectBattleCell(${i})" data-cell="${i}">
-                        ${cell || ''}
-                    </div>
-                `).join('')}
-            </div>
-            
-            <div id="battle-question-area"></div>
-            <div id="battle-result-area"></div>
-            
-            <button class="btn btn-primary" onclick="initQuizBattle(document.getElementById('game-container'))" style="margin-top: 1rem;">
-                🔄 Main Lagi
-            </button>
-        </div>
-    `;
-}
-
-function selectBattleCell(cellIndex) {
-    if (battleState.gameOver || battleState.board[cellIndex] || battleState.currentCell !== null) return;
-    
-    battleState.currentCell = cellIndex;
-    showBattleQuestion();
-}
-
-function showBattleQuestion() {
-    const questionArea = document.getElementById('battle-question-area');
-    const randomQ = gameQuestions.all[Math.floor(Math.random() * gameQuestions.all.length)];
-    
-    questionArea.innerHTML = `
-        <div class="battle-question">
-            <h3>${randomQ.subj}: ${randomQ.q}</h3>
-            <div class="battle-options">
-                ${randomQ.opts.map((opt, i) => `
-                    <div class="battle-option" onclick="answerBattle(${i}, ${randomQ.ans})">
-                        ${String.fromCharCode(65 + i)}. ${opt}
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
-
-function answerBattle(selected, correct) {
-    const questionArea = document.getElementById('battle-question-area');
-    
-    if (selected === correct) {
-        battleState.board[battleState.currentCell] = battleState.currentPlayer;
-        battleState.score[battleState.currentPlayer]++;
-        questionArea.innerHTML = `<div class="battle-result" style="color: green;">✅ Benar! Kotak berhasil diisi!</div>`;
-        
-        if (checkBattleWinner()) {
-            handleBattleEnd();
-            return;
-        }
-        
-        battleState.currentPlayer = 'O';
-        setTimeout(aiTurn, 1000);
-    } else {
-        questionArea.innerHTML = `<div class="battle-result" style="color: red;">❌ Salah! Giliran AI!</div>`;
-        battleState.currentPlayer = 'O';
-        setTimeout(aiTurn, 1000);
-    }
-    
-    battleState.currentCell = null;
-    renderQuizBattle(document.getElementById('game-container'));
-}
-
-function aiTurn() {
-    if (battleState.gameOver) return;
-    
-    const emptyCells = battleState.board.map((cell, i) => cell === null ? i : null).filter(i => i !== null);
-    if (emptyCells.length === 0) {
-        handleBattleEnd();
-        return;
-    }
-    
-    const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-    
-    if (Math.random() > 0.3) {
-        battleState.board[randomCell] = 'O';
-        battleState.score.O++;
-    }
-    
-    if (checkBattleWinner()) {
-        handleBattleEnd();
-        return;
-    }
-    
-    battleState.currentPlayer = 'X';
-    renderQuizBattle(document.getElementById('game-container'));
-    document.getElementById('battle-question-area').innerHTML = '<p>Giliran kamu! Pilih kotak kosong.</p>';
-}
-
-function checkBattleWinner() {
-    const winPatterns = [
-        [0,1,2], [3,4,5], [6,7,8],
-        [0,3,6], [1,4,7], [2,5,8],
-        [0,4,8], [2,4,6]
-    ];
-    
-    for (let pattern of winPatterns) {
-        const [a, b, c] = pattern;
-        if (battleState.board[a] && battleState.board[a] === battleState.board[b] && battleState.board[a] === battleState.board[c]) {
-            battleState.gameOver = true;
-            return battleState.board[a];
-        }
-    }
-    
-    if (!battleState.board.includes(null)) {
-        battleState.gameOver = true;
-        return 'DRAW';
-    }
-    
-    return null;
-}
-
-function handleBattleEnd() {
-    const winner = checkBattleWinner();
-    const resultArea = document.getElementById('battle-result-area');
-    
-    appData.gameStats.quizBattle.played++;
-    if (winner === 'X') {
-        appData.gameStats.quizBattle.bestScore = Math.max(appData.gameStats.quizBattle.bestScore, battleState.score.X);
-        resultArea.innerHTML = `<div class="battle-result" style="background: #2ecc71; color: white; padding: 1.5rem;">🎉 Kamu Menang! Score: ${battleState.score.X}</div>`;
-    } else if (winner === 'O') {
-        resultArea.innerHTML = `<div class="battle-result" style="background: #e74c3c; color: white; padding: 1.5rem;">😢 AI Menang! Coba lagi!</div>`;
-    } else {
-        resultArea.innerHTML = `<div class="battle-result" style="background: #f39c12; color: white; padding: 1.5rem;">🤝 Seri! Score: X=${battleState.score.X}, O=${battleState.score.O}</div>`;
-    }
-    
-    updateGameStats();
-}
-
-// Memory Match Game
-let memoryState = {
-    cards: [],
-    flipped: [],
-    matched: [],
-    moves: 0,
-    startTime: null,
-    timer: null
-};
-
-function initMemoryMatch(container) {
-    const pairs = [
-        { q: "f'(x²)", a: "2x" },
-        { q: "∫x dx", a: "½x²+C" },
-        { q: "ASEAN", a: "1967" },
-        { q: "Bhinneka", a: "Sutasoma" },
-        { q: "det[1,2;3,4]", a: "-2" },
-        { q: "Politik RI", a: "Bebas Aktif" },
-        { q: "f'(5)", a: "0" },
-        { q: "PBB keluar", a: "1965" }
-    ];
-    
-    const cards = [];
-    pairs.forEach((pair, i) => {
-        cards.push({ id: i * 2, content: pair.q, pairId: i });
-        cards.push({ id: i * 2 + 1, content: pair.a, pairId: i });
-    });
-    
-    memoryState = {
-        cards: shuffleArray(cards),
-        flipped: [],
-        matched: [],
-        moves: 0,
-        startTime: Date.now(),
-        timer: null
-    };
-    
-    renderMemoryMatch(container);
-    startMemoryTimer(container);
-}
-
-function shuffleArray(array) {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-}
-
-function renderMemoryMatch(container) {
-    const elapsed = memoryState.startTime ? Math.floor((Date.now() - memoryState.startTime) / 1000) : 0;
-    
-    container.innerHTML = `
-        <div class="memory-game-container">
-            <h2>🧠 Memory Match</h2>
-            <p>Cocokkan rumus/pertanyaan dengan jawabannya!</p>
-            
-            <div class="memory-stats">
-                <div>⏱️ Waktu<br><strong id="memory-timer">${elapsed}s</strong></div>
-                <div>🎯 Moves<br><strong>${memoryState.moves}</strong></div>
-                <div>✅ Matched<br><strong>${memoryState.matched.length/2}/8</strong></div>
-            </div>
-            
-            <div class="memory-board">
-                ${memoryState.cards.map(card => `
-                    <div class="memory-card ${memoryState.flipped.includes(card.id) ? 'flipped' : ''} ${memoryState.matched.includes(card.pairId) ? 'matched' : ''}"
-                         onclick="flipMemoryCard(${card.id})">
-                        <div class="card-back">?</div>
-                        <div class="card-front">${card.content}</div>
-                    </div>
-                `).join('')}
-            </div>
-            
-            <button class="btn btn-primary" onclick="initMemoryMatch(document.getElementById('game-container'))" style="margin-top: 1rem;">
-                🔄 Main Lagi
-            </button>
-        </div>
-    `;
-}
-
-function startMemoryTimer(container) {
-    if (memoryState.timer) clearInterval(memoryState.timer);
-    memoryState.timer = setInterval(() => {
-        const timerEl = document.getElementById('memory-timer');
-        if (timerEl && memoryState.matched.length < 8) {
-            const elapsed = Math.floor((Date.now() - memoryState.startTime) / 1000);
-            timerEl.textContent = elapsed + 's';
-        }
-    }, 1000);
-}
-
-function flipMemoryCard(cardId) {
-    if (memoryState.flipped.length >= 2 || memoryState.flipped.includes(cardId)) return;
-    
-    const card = memoryState.cards.find(c => c.id === cardId);
-    if (memoryState.matched.includes(card.pairId)) return;
-    
-    memoryState.flipped.push(cardId);
-    renderMemoryMatch(document.getElementById('game-container'));
-    
-    if (memoryState.flipped.length === 2) {
-        memoryState.moves++;
-        const card1 = memoryState.cards.find(c => c.id === memoryState.flipped[0]);
-        const card2 = memoryState.cards.find(c => c.id === memoryState.flipped[1]);
-        
-        if (card1.pairId === card2.pairId) {
-            memoryState.matched.push(card1.pairId);
-            memoryState.flipped = [];
-            
-            if (memoryState.matched.length === 8) {
-                endMemoryGame();
-            }
-        } else {
-            setTimeout(() => {
-                memoryState.flipped = [];
-                renderMemoryMatch(document.getElementById('game-container'));
-            }, 1000);
-        }
-        
-        renderMemoryMatch(document.getElementById('game-container'));
-    }
-}
-
-function endMemoryGame() {
-    clearInterval(memoryState.timer);
-    const finalTime = Math.floor((Date.now() - memoryState.startTime) / 1000);
-    
-    appData.gameStats.memoryMatch.played++;
-    if (!appData.gameStats.memoryMatch.bestTime || finalTime < parseInt(appData.gameStats.memoryMatch.bestTime)) {
-        appData.gameStats.memoryMatch.bestTime = finalTime + 's';
-    }
-    
-    updateGameStats();
-    
-    setTimeout(() => {
-        alert(`🎉 Selesai!\nWaktu: ${finalTime}s\nMoves: ${memoryState.moves}`);
-    }, 500);
-}
-
-// Speed Quiz Game
-let speedState = {
-    score: 0,
-    correct: 0,
-    wrong: 0,
-    timeLeft: 60,
-    currentQ: null,
-    timer: null
-};
-
-function initSpeedQuiz(container) {
-    speedState = {
-        score: 0,
-        correct: 0,
-        wrong: 0,
-        timeLeft: 60,
-        currentQ: null,
-        timer: null
-    };
-    
-    renderSpeedQuiz(container);
-    loadSpeedQuestion();
-    startSpeedTimer(container);
-}
-
-function renderSpeedQuiz(container) {
-    container.innerHTML = `
-        <div class="speed-quiz-container">
-            <h2>⚡ Speed Quiz</h2>
-            <p>Jawab sebanyak mungkin dalam 60 detik!</p>
-            
-            <div class="speed-timer ${speedState.timeLeft <= 10 ? 'warning' : ''}">
-                ${speedState.timeLeft}s
-            </div>
-            
-            <div class="speed-score">
-                <div>💯 Score<br><strong>${speedState.score}</strong></div>
-                <div>✅ Benar<br><strong>${speedState.correct}</strong></div>
-                <div>❌ Salah<br><strong>${speedState.wrong}</strong></div>
-            </div>
-            
-            <div id="speed-question-area"></div>
-        </div>
-    `;
-}
-
-function startSpeedTimer(container) {
-    speedState.timer = setInterval(() => {
-        speedState.timeLeft--;
-        
-        if (speedState.timeLeft <= 0) {
-            endSpeedQuiz(container);
-        } else {
-            renderSpeedQuiz(container);
-            if (speedState.currentQ) {
-                displaySpeedQuestion(speedState.currentQ);
-            }
-        }
-    }, 1000);
-}
-
-function loadSpeedQuestion() {
-    speedState.currentQ = gameQuestions.all[Math.floor(Math.random() * gameQuestions.all.length)];
-    displaySpeedQuestion(speedState.currentQ);
-}
-
-function displaySpeedQuestion(q) {
-    const area = document.getElementById('speed-question-area');
-    area.innerHTML = `
-        <div class="speed-question">
-            <h3>${q.subj}: ${q.q}</h3>
-            <div class="speed-options">
-                ${q.opts.map((opt, i) => `
-                    <div class="speed-option" onclick="answerSpeed(${i}, ${q.ans})">
-                        ${String.fromCharCode(65 + i)}. ${opt}
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-}
-
-function answerSpeed(selected, correct) {
-    if (selected === correct) {
-        speedState.score += 10;
-        speedState.correct++;
-    } else {
-        speedState.wrong++;
-    }
-    
-    loadSpeedQuestion();
-    renderSpeedQuiz(document.getElementById('game-container'));
-}
-
-function endSpeedQuiz(container) {
-    clearInterval(speedState.timer);
-    
-    appData.gameStats.speedQuiz.played++;
-    if (speedState.score > appData.gameStats.speedQuiz.bestScore) {
-        appData.gameStats.speedQuiz.bestScore = speedState.score;
-    }
-    
-    updateGameStats();
-    
-    container.innerHTML = `
-        <div class="speed-quiz-container">
-            <h2>⚡ Speed Quiz Selesai!</h2>
-            <div class="speed-result">
-                <h3>🎉 Hasil Akhir</h3>
-                <p style="font-size: 3rem; color: var(--primary-color); margin: 1rem 0;">${speedState.score}</p>
-                <p style="font-size: 1.2rem;">✅ Benar: ${speedState.correct}</p>
-                <p style="font-size: 1.2rem;">❌ Salah: ${speedState.wrong}</p>
-                <p style="margin-top: 1rem;">${speedState.score >= 100 ? '🏆 Luar biasa!' : speedState.score >= 50 ? '👍 Bagus!' : '💪 Latihan lagi!'}</p>
-            </div>
-            <button class="btn btn-primary" onclick="initSpeedQuiz(document.getElementById('game-container'))" style="margin-top: 1rem;">
-                🔄 Main Lagi
-            </button>
-        </div>
-    `;
-}
-
-console.log('🎓 EduNusantara LMS Kelas 12 - Sistem berhasil dimuat!');
+// Export other needed functions
+window.selectQuizAnswer = selectQuizAnswer;
+window.nextQuestion = nextQuestion;
+window.prevQuestion = prevQuestion;
+window.submitQuiz = submitQuiz;
+window.closeQuiz = closeQuiz;
+window.closeLesson = closeLesson;
+window.markLessonComplete = markLessonComplete;
+window.startQuiz = startQuiz;
+window.openLesson = openLesson;
+window.filterCourses = filterCourses;
