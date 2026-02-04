@@ -5,22 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduNusantara - Fun Games</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <span class="logo-icon">🎓</span>
-                <span class="logo-text">EduNusantara</span>
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-book-open"></i></div>
+                    <div class="logo-text">
+                        <span class="logo-brand">Edu<span class="logo-highlight">Nusantara</span></span>
+                        <span class="logo-tagline">Platform SMP</span>
+                    </div>
+                </a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Dashboard</a></li>
-                <li><a href="matematika.html" class="nav-link">Matematika</a></li>
-                <li><a href="ppkn.html" class="nav-link">PPKn</a></li>
-                <li><a href="fungames.html" class="nav-link active">Fun Games</a></li>
-                <li><a href="profile.html" class="nav-link">Profil</a></li>
+            <ul class="nav-main-menu">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                <li><a href="matematika.html" class="nav-link"><i class="fas fa-calculator"></i><span>Matematika</span></a></li>
+                <li><a href="ppkn.html" class="nav-link"><i class="fas fa-landmark"></i><span>PPKn</span></a></li>
+                <li><a href="fungames.html" class="nav-link active"><i class="fas fa-gamepad"></i><span>Fun Games</span></a></li>
+                <li><a href="profile.html" class="nav-link"><i class="fas fa-user"></i><span>Profil</span></a></li>
             </ul>
+            <div class="nav-actions">
+                <button class="btn-theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <div class="user-menu-mini"><div class="user-avatar-mini"><i class="fas fa-user"></i></div></div>
+            </div>
+            <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+        <div class="mobile-nav" id="mobile-nav">
+            <div class="mobile-nav-header"><h4>Menu</h4><button class="mobile-close" id="mobile-close"><i class="fas fa-times"></i></button></div>
+            <div class="mobile-nav-content">
+                <a href="index.html" class="mobile-nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="matematika.html" class="mobile-nav-item"><i class="fas fa-calculator"></i><span>Matematika</span></a>
+                <a href="ppkn.html" class="mobile-nav-item"><i class="fas fa-landmark"></i><span>PPKn</span></a>
+                <a href="fungames.html" class="mobile-nav-item active"><i class="fas fa-gamepad"></i><span>Fun Games</span></a>
+                <a href="profile.html" class="mobile-nav-item"><i class="fas fa-user"></i><span>Profil</span></a>
+            </div>
         </div>
     </nav>
 

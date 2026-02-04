@@ -611,9 +611,9 @@ function setupHeroAnimations() {
 
 function animateStatsCounter() {
     const stats = [
-        { element: '.stat-number:nth-child(1)', target: 10, suffix: '' },
-        { element: '.stat-number:nth-child(2)', target: 3, suffix: '' },
-        { element: '.stat-number:nth-child(3)', target: 100, suffix: '+' }
+        { element: '.hero-stats .hero-stat:nth-child(1) .stat-number', target: 5, suffix: '' },
+        { element: '.hero-stats .hero-stat:nth-child(2) .stat-number', target: 3, suffix: '' },
+        { element: '.hero-stats .hero-stat:nth-child(3) .stat-number', target: 100, suffix: '+' }
     ];
     
     stats.forEach(stat => {
@@ -685,10 +685,13 @@ function initializeDashboard() {
     setupDashboardEventListeners();
 }
 
+function updateClassCards() {
+    // Class selector section removed - no-op
+}
+
 function animateDashboardElements() {
     const elements = [
         '.hero-section',
-        '.class-cards',
         '.stats-grid',
         '.courses-grid',
         '.events-grid',
@@ -707,31 +710,27 @@ function animateDashboardElements() {
 function updateDashboard() {
     console.log('Updating enhanced dashboard for class', appData.currentClass);
     
-    // Calculate total progress for current class
+    const activeSubjects = ['matematika', 'indonesia', 'english', 'ppkn', 'senibudaya'];
     let totalProgress = 0;
     let completedSubjects = 0;
     let totalScore = 0;
-    let subjectCount = 0;
     
-    Object.keys(appData.progress).forEach(subject => {
-        const progress = appData.progress[subject][`kelas${appData.currentClass}`] || 0;
+    activeSubjects.forEach(subject => {
+        const progress = appData.progress[subject]?.[`kelas${appData.currentClass}`] || 0;
         totalProgress += progress;
         if (progress === 100) completedSubjects++;
         
-        const score = appData.quizScores[subject][`kelas${appData.currentClass}`];
-        if (score !== null) {
-            totalScore += score;
-        }
-        subjectCount++;
+        const score = appData.quizScores[subject]?.[`kelas${appData.currentClass}`];
+        if (score !== null) totalScore += score;
     });
     
-    const avgProgress = Math.round(totalProgress / subjectCount);
+    const avgProgress = Math.round(totalProgress / activeSubjects.length);
     
     // Update stats with animations
     updateStatElement('overall-progress-bar', avgProgress);
     updateStatElement('total-progress', avgProgress, '%');
-    updateStatElement('completed-courses', `${completedSubjects}/${subjectCount}`);
-    updateStatElement('completion-bar', (completedSubjects / subjectCount * 100));
+    updateStatElement('completed-courses', `${completedSubjects}/${activeSubjects.length}`);
+    updateStatElement('completion-bar', (completedSubjects / activeSubjects.length * 100));
     updateStatElement('total-score', totalScore);
     
     // Update study time
@@ -805,16 +804,13 @@ function updateStreakDisplay() {
 }
 
 function updateAllProgressBars() {
-    const subjects = ['matematika', 'indonesia', 'ipa', 'ips', 'english', 'ppkn', 'senibudaya', 'pjok', 'prakarya', 'informatika'];
+    const subjects = ['matematika', 'indonesia', 'english', 'ppkn', 'senibudaya'];
     
     subjects.forEach(subject => {
-        const progress = appData.progress[subject][`kelas${appData.currentClass}`] || 0;
+        const progress = appData.progress[subject]?.[`kelas${appData.currentClass}`] || 0;
         
-        // Update main course cards
         updateProgressBar(`${subject}-progress`, progress);
         updateProgressText(`${subject}-progress-text`, progress);
-        
-        // Update navbar progress
         updateProgressBar(`nav-${subject}-progress`, progress);
         updateProgressText(`nav-${subject}-percent`, progress);
     });
@@ -1017,16 +1013,37 @@ function getSubjectIcon(subject) {
     const icons = {
         matematika: 'calculator',
         indonesia: 'book',
-        ipa: 'flask',
-        ips: 'globe-asia',
         english: 'language',
         ppkn: 'landmark',
-        senibudaya: 'palette',
-        pjok: 'running',
-        prakarya: 'hammer',
-        informatika: 'laptop-code'
+        senibudaya: 'palette'
     };
     return icons[subject] || 'book';
+}
+
+function getCourseModules(subject) {
+    const modules = {
+        matematika: ['Bilangan Bulat', 'Aljabar Dasar', 'Geometri', 'Statistika', 'Peluang'],
+        indonesia: ['Membaca Pemahaman', 'Menulis', 'Tata Bahasa', 'Sastra', 'Presentasi'],
+        english: ['Reading', 'Writing', 'Grammar', 'Vocabulary', 'Speaking'],
+        ppkn: ['Pancasila', 'Bhineka Tunggal Ika', 'Demokrasi', 'Hukum', 'Globalisasi'],
+        senibudaya: ['Seni Rupa', 'Musik', 'Tari', 'Teater', 'Apresiasi']
+    };
+    return modules[subject] || ['Materi 1', 'Materi 2', 'Materi 3', 'Materi 4', 'Materi 5'];
+}
+
+function initializeSubject(subject) {
+    if (typeof updateAllProgressBars === 'function') updateAllProgressBars();
+    const progress = appData.progress[subject]?.[`kelas${appData.currentClass}`] || 0;
+    updateProgressBar(`${subject}-progress`, progress);
+    updateProgressText(`${subject}-progress-text`, progress);
+}
+
+function initializeFunGames() {
+    // Fun Games page init - e.g. load game stats
+}
+
+function initializeProfile() {
+    // Profile page init
 }
 
 function getProgressBreakdown(course) {
@@ -1713,47 +1730,42 @@ console.log('🚀 EduNusantara SMP Platform Ready with Enhanced Features!');
 
 // Export functions to global scope
 window.showAllSubjects = function() {
-    // Your existing function implementation
     const modal = document.getElementById('all-subjects-modal');
     const grid = document.getElementById('all-subjects-grid');
     
     if (!modal || !grid) return;
     
     const allSubjects = [
-        { name: 'Matematika', icon: 'calculator', color: 'math' },
-        { name: 'Bahasa Indonesia', icon: 'book', color: 'indonesia' },
-        { name: 'IPA', icon: 'flask', color: 'ipa' },
-        { name: 'IPS', icon: 'globe-asia', color: 'ips' },
-        { name: 'Bahasa Inggris', icon: 'language', color: 'english' },
-        { name: 'PPKn', icon: 'landmark', color: 'ppkn' },
-        { name: 'Seni Budaya', icon: 'palette', color: 'seni' },
-        { name: 'PJOK', icon: 'running', color: 'pjok' },
-        { name: 'Prakarya', icon: 'hammer', color: 'prakarya' },
-        { name: 'Informatika', icon: 'laptop-code', color: 'informatika' }
+        { name: 'Matematika', icon: 'calculator', color: 'math', link: 'matematika.html' },
+        { name: 'Bahasa Indonesia', icon: 'book', color: 'indonesia', link: 'bahasaindonesia.html' },
+        { name: 'Bahasa Inggris', icon: 'language', color: 'english', link: 'english.html' },
+        { name: 'PPKn', icon: 'landmark', color: 'ppkn', link: 'ppkn.html' },
+        { name: 'Seni Budaya', icon: 'palette', color: 'seni', link: 'senibudaya.html' },
+        { name: 'Fun Games', icon: 'gamepad', color: 'accent', link: 'fungames.html' }
     ];
     
     let html = '';
     allSubjects.forEach(subject => {
-        const subjectKey = subject.name.toLowerCase().replace(' ', '');
-        const progress = appData.progress[subjectKey]?.[`kelas${appData.currentClass}`] || 0;
+        const subjectKey = subject.link.replace('.html', '');
+        const progress = subjectKey === 'fungames' ? 0 : (appData.progress[subjectKey]?.[`kelas${appData.currentClass}`] || 0);
         
         html += `
-            <a href="${subjectKey}.html" class="subject-card">
+            <a href="${subject.link}" class="subject-card">
                 <i class="fas fa-${subject.icon}" style="color: var(--${subject.color})"></i>
                 <h4>${subject.name}</h4>
-                <div class="subject-progress">
+                ${progress > 0 ? `<div class="subject-progress">
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${progress}%; background: var(--${subject.color})"></div>
                     </div>
                     <span class="progress-text">${progress}%</span>
-                </div>
+                </div>` : ''}
             </a>
         `;
     });
     
     grid.innerHTML = html;
     modal.classList.add('show');
-    playSound('modal-open');
+    if (typeof playSound === 'function') playSound('modal-open');
 };
 
 window.closeAllSubjects = function() {
@@ -1763,6 +1775,54 @@ window.closeAllSubjects = function() {
         playSound('modal-close');
     }
 };
+
+// ===== SUBJECT PAGE STUBS (Lesson & Quiz) =====
+function openLesson(subject, lessonId) {
+    const modal = document.getElementById('lesson-modal');
+    const container = document.getElementById('lesson-container');
+    if (modal && container) {
+        const modules = getCourseModules(subject);
+        const idx = lessonId ? parseInt(lessonId.replace('lesson-', ''), 10) : 0;
+        const title = modules[idx] || 'Materi';
+        container.innerHTML = `<div class="lesson-modal-body"><h3>${title}</h3><p>Konten materi akan ditampilkan di sini. Klik "Selesai" untuk menandai selesai.</p><button class="btn-course" onclick="markLessonComplete('${subject}', '${lessonId}'); closeLesson();">Selesai</button></div>`;
+        modal.classList.add('show');
+    }
+}
+function closeLesson() {
+    const modal = document.getElementById('lesson-modal');
+    if (modal) modal.classList.remove('show');
+}
+function markLessonComplete(subject, lessonId) {
+    const key = `kelas${appData.currentClass}`;
+    if (appData.completedLessons[subject] && appData.completedLessons[subject][key] && !appData.completedLessons[subject][key].includes(lessonId)) {
+        appData.completedLessons[subject][key].push(lessonId);
+        saveData();
+        if (typeof showToast === 'function') showToast('Materi selesai!', 'success');
+    }
+}
+function startQuiz(subject) {
+    const modal = document.getElementById('quiz-modal');
+    const container = document.getElementById('quiz-container');
+    if (modal && container) {
+        container.innerHTML = `<div class="quiz-modal-body"><h3>Kuis ${subject}</h3><p>Fitur kuis akan ditampilkan di sini.</p><button class="btn-course" onclick="closeQuiz()">Tutup</button></div>`;
+        modal.classList.add('show');
+    }
+}
+function closeQuiz() {
+    const modal = document.getElementById('quiz-modal');
+    if (modal) modal.classList.remove('show');
+}
+function selectQuizAnswer() {}
+function nextQuestion() {}
+function prevQuestion() {}
+function submitQuiz() {}
+function showCourseDetails() {}
+function updateNotifications() {}
+
+function toggleModule(num) {
+    const item = document.querySelector(`.module-item[data-module="${num}"]`);
+    if (item) item.classList.toggle('open');
+}
 
 // Export other needed functions
 window.selectQuizAnswer = selectQuizAnswer;
@@ -1775,3 +1835,4 @@ window.markLessonComplete = markLessonComplete;
 window.startQuiz = startQuiz;
 window.openLesson = openLesson;
 window.filterCourses = filterCourses;
+window.toggleModule = toggleModule;

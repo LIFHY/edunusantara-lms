@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduNusantara - Bahasa Indonesia SMP</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-area">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-book-open"></i></div>
+                    <div class="logo-text">
+                        <span class="logo-brand">Edu<span class="logo-highlight">Nusantara</span></span>
+                        <span class="logo-tagline">Platform SMP</span>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-main-menu">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-link"><i class="fas fa-book-open"></i><span>Mata Pelajaran</span><i class="fas fa-chevron-down dropdown-icon"></i></a>
+                    <div class="dropdown-menu mega-menu">
+                        <div class="mega-menu-header"><h4><i class="fas fa-book-open"></i> Pilih Mata Pelajaran</h4></div>
+                        <div class="mega-menu-grid">
+                            <div class="subject-column">
+                                <a href="matematika.html" class="subject-item math"><i class="fas fa-calculator"></i><div class="subject-info"><span class="subject-name">Matematika</span><div class="subject-progress"><div class="progress-bar"><div class="progress-fill" id="nav-math-progress"></div></div><span class="progress-text" id="nav-math-percent">0%</span></div></div></a>
+                                <a href="bahasaindonesia.html" class="subject-item indonesia"><i class="fas fa-book"></i><div class="subject-info"><span class="subject-name">B. Indonesia</span><div class="subject-progress"><div class="progress-bar"><div class="progress-fill" id="nav-indo-progress"></div></div><span class="progress-text" id="nav-indo-percent">0%</span></div></div></a>
+                                <a href="english.html" class="subject-item english"><i class="fas fa-language"></i><div class="subject-info"><span class="subject-name">Bahasa Inggris</span><div class="subject-progress"><div class="progress-bar"><div class="progress-fill" id="nav-english-progress"></div></div><span class="progress-text" id="nav-english-percent">0%</span></div></div></a>
+                            </div>
+                            <div class="subject-column">
+                                <a href="ppkn.html" class="subject-item ppkn"><i class="fas fa-landmark"></i><div class="subject-info"><span class="subject-name">PPKn</span><div class="subject-progress"><div class="progress-bar"><div class="progress-fill" id="nav-ppkn-progress"></div></div><span class="progress-text" id="nav-ppkn-percent">0%</span></div></div></a>
+                                <a href="senibudaya.html" class="subject-item seni"><i class="fas fa-palette"></i><div class="subject-info"><span class="subject-name">Seni Budaya</span><div class="subject-progress"><div class="progress-bar"><div class="progress-fill" id="nav-seni-progress"></div></div><span class="progress-text" id="nav-seni-percent">0%</span></div></div></a>
+                                <a href="fungames.html" class="subject-item games"><i class="fas fa-gamepad"></i><div class="subject-info"><span class="subject-name">Fun Games</span><span class="subject-badge">Baru!</span></div></a>
+                            </div>
+                        </div>
+                        <div class="mega-menu-footer"><button class="btn-view-all" onclick="showAllSubjects()"><i class="fas fa-eye"></i> Lihat Semua</button></div>
+                    </div>
+                </li>
+                <li><a href="index.html#leaderboard-section" class="nav-link"><i class="fas fa-crown"></i><span>Leaderboard</span></a></li>
+                <li><a href="profile.html" class="nav-link"><i class="fas fa-user"></i><span>Profil</span></a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="class-selector-compact">
+                    <div class="class-display"><i class="fas fa-graduation-cap"></i><span id="current-class-display">Kelas 7</span></div>
+                    <select id="class-select" class="class-select-dropdown"><option value="7">Kelas 7</option><option value="8">Kelas 8</option><option value="9">Kelas 9</option></select>
+                </div>
+                <button class="btn-theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                <div class="user-menu-mini"><div class="user-avatar-mini"><i class="fas fa-user"></i></div></div>
+            </div>
+            <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+        </div>
+        <div class="mobile-nav" id="mobile-nav">
+            <div class="mobile-nav-header"><h4>Menu</h4><button class="mobile-close" id="mobile-close"><i class="fas fa-times"></i></button></div>
+            <div class="mobile-nav-content">
+                <a href="index.html" class="mobile-nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                <a href="matematika.html" class="mobile-nav-item"><i class="fas fa-calculator"></i><span>Matematika</span></a>
+                <a href="bahasaindonesia.html" class="mobile-nav-item active"><i class="fas fa-book"></i><span>B. Indonesia</span></a>
+                <a href="english.html" class="mobile-nav-item"><i class="fas fa-language"></i><span>B. Inggris</span></a>
+                <a href="ppkn.html" class="mobile-nav-item"><i class="fas fa-landmark"></i><span>PPKn</span></a>
+                <a href="senibudaya.html" class="mobile-nav-item"><i class="fas fa-palette"></i><span>Seni Budaya</span></a>
+                <a href="fungames.html" class="mobile-nav-item"><i class="fas fa-gamepad"></i><span>Fun Games</span></a>
+                <a href="profile.html" class="mobile-nav-item"><i class="fas fa-user"></i><span>Profil</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="subject-page">
+            <div class="page-header">
+                <h1><i class="fas fa-book"></i> Bahasa Indonesia SMP</h1>
+                <p>Membaca, menulis, dan apresiasi sastra untuk Kelas 7–9</p>
+            </div>
+            <div class="course-content">
+                <div class="modules-list">
+                    <div class="module-item" data-module="1">
+                        <div class="module-header" onclick="toggleModule(1)">
+                            <div class="module-title"><span class="module-number">1</span><h3>Membaca Pemahaman</h3></div>
+                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-0')"><i class="fas fa-book-open"></i> Baca Materi</button>
+                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Membaca teks informatif dan fiksi</span></div></div>
+                        </div>
+                    </div>
+                    <div class="module-item" data-module="2">
+                        <div class="module-header" onclick="toggleModule(2)">
+                            <div class="module-title"><span class="module-number">2</span><h3>Menulis</h3></div>
+                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-1')"><i class="fas fa-book-open"></i> Baca Materi</button>
+                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Paragraf, ringkasan, dan karangan</span></div></div>
+                        </div>
+                    </div>
+                    <div class="module-item" data-module="3">
+                        <div class="module-header" onclick="toggleModule(3)">
+                            <div class="module-title"><span class="module-number">3</span><h3>Tata Bahasa</h3></div>
+                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-2')"><i class="fas fa-book-open"></i> Baca Materi</button>
+                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Ejaan, imbuhan, dan kalimat efektif</span></div></div>
+                        </div>
+                    </div>
+                    <div class="module-item" data-module="4">
+                        <div class="module-header" onclick="toggleModule(4)">
+                            <div class="module-title"><span class="module-number">4</span><h3>Sastra</h3></div>
+                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-3')"><i class="fas fa-book-open"></i> Baca Materi</button>
+                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Puisi, cerpen, dan drama</span></div></div>
+                        </div>
+                    </div>
+                    <div class="module-item" data-module="5">
+                        <div class="module-header" onclick="toggleModule(5)">
+                            <div class="module-title"><span class="module-number">5</span><h3>Presentasi</h3></div>
+                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="module-content">
+                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-4')"><i class="fas fa-book-open"></i> Baca Materi</button>
+                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Berbicara di depan umum dan diskusi</span></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-section">
+                    <h2><i class="fas fa-question-circle"></i> Kuis Bahasa Indonesia</h2>
+                    <p>Uji pemahamanmu dengan kuis singkat</p>
+                    <button class="btn-quiz" onclick="startQuiz('indonesia')"><i class="fas fa-play"></i> Mulai Kuis</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="lesson-modal">
+        <div class="modal-content lesson-modal-content">
+            <button class="modal-close" onclick="closeLesson()"><i class="fas fa-times"></i></button>
+            <div id="lesson-container"></div>
+        </div>
+    </div>
+    <div class="modal" id="quiz-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeQuiz()"><i class="fas fa-times"></i></button>
+            <div id="quiz-container"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
