@@ -51,13 +51,15 @@ let appData = {
 
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
+    if (typeof EDU_AUTH !== 'undefined' && !EDU_AUTH.isLoggedIn()) {
+        var page = (window.location.pathname.split('/').pop() || '').toLowerCase();
+        if (page !== 'login.html' && page !== 'login') {
+            window.location.replace('login.html?return=' + encodeURIComponent(window.location.href));
+            return;
+        }
+    }
     console.log('🎓 EduNusantara SMP Platform Initialized');
-    
-    // Initialize with animations
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 100);
-    
+    setTimeout(function() { document.body.classList.add('loaded'); }, 100);
     loadData();
     highlightActiveNav();
     
@@ -1039,7 +1041,15 @@ function initializeSubject(subject) {
 }
 
 function initializeFunGames() {
-    // Fun Games page init - e.g. load game stats
+    var user = typeof EDU_AUTH !== 'undefined' ? EDU_AUTH.getCurrentUser() : null;
+    if (user && user.kelas) {
+        appData.currentClass = parseInt(user.kelas, 10) || 7;
+        var classSelect = document.getElementById('class-select');
+        if (classSelect) classSelect.value = String(appData.currentClass);
+        var classDisplay = document.getElementById('current-class-display');
+        if (classDisplay) classDisplay.textContent = 'Kelas ' + appData.currentClass;
+    }
+    if (typeof updateAllProgressBars === 'function') updateAllProgressBars();
 }
 
 function initializeProfile() {

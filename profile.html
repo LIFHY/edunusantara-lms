@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduNusantara - Profil</title>
+    <title>Profil - EduNusantara LMS</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-container { max-width: 800px; margin: 0 auto; }
+        .profile-card { background: var(--dark-light); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+        .profile-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; font-size: 3rem; flex-shrink: 0; }
+        .profile-meta h2 { margin-bottom: 0.25rem; }
+        .profile-class { color: var(--secondary); font-weight: 600; }
+        .progress-mapel { margin-bottom: 1.5rem; }
+        .progress-mapel h3 { font-size: 1.1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .progress-mapel .progress-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden; margin-bottom: 0.25rem; }
+        .progress-mapel .progress-fill { height: 100%; border-radius: 999px; transition: width 0.5s ease; }
+        .progress-mapel .pct { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+        .game-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+        .game-stat-card { background: var(--dark-light); border-radius: var(--radius-md); padding: 1.25rem; border: 1px solid rgba(255,255,255,0.08); }
+        .game-stat-card h4 { font-size: 0.9rem; margin-bottom: 0.5rem; color: rgba(255,255,255,0.8); }
+        .game-stat-card .value { font-size: 1.5rem; font-weight: 700; color: var(--secondary); }
+        .ranking-badge { display: inline-block; background: var(--gradient-primary); color: #fff; padding: 0.5rem 1rem; border-radius: var(--radius-full); font-weight: 700; margin-top: 0.5rem; }
+        .btn-logout { margin-top: 1rem; padding: 0.5rem 1rem; background: rgba(244,67,54,0.2); border: 1px solid rgba(244,67,54,0.4); color: #f44336; border-radius: var(--radius-md); cursor: pointer; font-size: 0.9rem; }
+        .btn-logout:hover { background: rgba(244,67,54,0.3); }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -28,7 +47,7 @@
             </ul>
             <div class="nav-actions">
                 <button class="btn-theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
-                <div class="user-menu-mini"><div class="user-avatar-mini"><i class="fas fa-user"></i></div></div>
+                <div class="user-menu-mini" id="profile-nav-avatar"><div class="user-avatar-mini"><i class="fas fa-user"></i></div></div>
             </div>
             <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
         </div>
@@ -44,63 +63,135 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="main-content">
         <section id="profile" class="page active">
             <div class="page-header">
-                <h1>👤 Profil Saya</h1>
+                <h1><i class="fas fa-user"></i> Profil Saya</h1>
             </div>
 
             <div class="profile-container">
                 <div class="profile-card">
-                    <div class="profile-avatar">
-                        <span class="avatar-icon">👨‍🎓</span>
+                    <div class="profile-avatar" id="profile-avatar">👨‍🎓</div>
+                    <div class="profile-meta">
+                        <h2 id="profile-name">Siswa EduNusantara</h2>
+                        <p class="profile-class" id="profile-class">Kelas 7</p>
+                        <button type="button" class="btn-logout" id="btn-logout"><i class="fas fa-sign-out-alt"></i> Keluar</button>
                     </div>
-                    <h2 id="profile-name">Siswa EduNusantara</h2>
-                    <p class="profile-class">Kelas XII</p>
                 </div>
 
-                <div class="achievements">
-                    <h2>🏆 Pencapaian</h2>
+                <div class="stat-card glass" style="margin-bottom: 1.5rem;">
+                    <h3><i class="fas fa-chart-line"></i> Progress per Mata Pelajaran</h3>
+                    <div id="profile-progress-list"></div>
+                </div>
+
+                <div class="stat-card glass" style="margin-bottom: 1.5rem;">
+                    <h3><i class="fas fa-gamepad"></i> Statistik Fun Games</h3>
+                    <div class="game-stats-grid">
+                        <div class="game-stat-card">
+                            <h4>Quiz Battle</h4>
+                            <div class="value" id="stat-quiz-battle-played">0</div>
+                            <p class="pct">Dimainkan</p>
+                            <div class="value" id="stat-quiz-battle-best">0</div>
+                            <p class="pct">Best score</p>
+                        </div>
+                        <div class="game-stat-card">
+                            <h4>Memory Match</h4>
+                            <div class="value" id="stat-memory-played">0</div>
+                            <p class="pct">Dimainkan</p>
+                            <div class="value" id="stat-memory-best">-</div>
+                            <p class="pct">Best time</p>
+                        </div>
+                        <div class="game-stat-card">
+                            <h4>Speed Quiz</h4>
+                            <div class="value" id="stat-speed-played">0</div>
+                            <p class="pct">Dimainkan</p>
+                            <div class="value" id="stat-speed-best">0</div>
+                            <p class="pct">Best score</p>
+                        </div>
+                    </div>
+                    <p><strong>Ranking:</strong> <span class="ranking-badge" id="profile-ranking">-</span></p>
+                </div>
+
+                <div class="achievements stat-card glass">
+                    <h2><i class="fas fa-trophy"></i> Pencapaian</h2>
                     <div class="achievement-grid" id="achievement-container">
-                        <div class="achievement-item locked">
+                        <div class="achievement-item locked" title="Selesaikan 1 materi">
                             <span class="achievement-icon">🌟</span>
                             <p>Pemula</p>
                         </div>
-                        <div class="achievement-item locked">
+                        <div class="achievement-item locked" title="Selesaikan 10 materi">
                             <span class="achievement-icon">📚</span>
                             <p>Rajin Belajar</p>
                         </div>
-                        <div class="achievement-item locked">
+                        <div class="achievement-item locked" title="Nilai 90+ di quiz">
                             <span class="achievement-icon">💯</span>
                             <p>Nilai Sempurna</p>
                         </div>
-                        <div class="achievement-item locked">
+                        <div class="achievement-item locked" title="Selesaikan semua mapel">
                             <span class="achievement-icon">🎓</span>
                             <p>Lulus Semua</p>
                         </div>
-                    </div>
-                </div>
-
-                <div class="learning-stats">
-                    <h2>📊 Statistik Belajar</h2>
-                    <div class="stat-row">
-                        <span>Total Materi Selesai:</span>
-                        <strong id="total-lessons">0/6</strong>
-                    </div>
-                    <div class="stat-row">
-                        <span>Nilai Rata-rata:</span>
-                        <strong id="average-score">0</strong>
-                    </div>
-                    <div class="stat-row">
-                        <span>Waktu Belajar:</span>
-                        <strong id="study-time">0 menit</strong>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <script src="data/subjects.js"></script>
+    <script src="data/progress.js"></script>
+    <script src="data/leaderboard.js"></script>
+    <script src="utils/storage.js"></script>
+    <script src="utils/auth.js"></script>
+    <script src="utils/progress-calculator.js"></script>
+    <script src="utils/score-engine.js"></script>
     <script src="script.js"></script>
+    <script>
+        if (typeof EDU_AUTH !== 'undefined' && !EDU_AUTH.isLoggedIn()) {
+            window.location.replace('login.html?return=' + encodeURIComponent(window.location.href));
+        }
+        (function() {
+            var user = typeof EDU_AUTH !== 'undefined' ? EDU_AUTH.getCurrentUser() : null;
+            if (!user) return;
+            document.getElementById('profile-name').textContent = user.nama || 'Siswa';
+            document.getElementById('profile-class').textContent = 'Kelas ' + (user.kelas || 7);
+            var av = document.getElementById('profile-avatar');
+            if (av) av.textContent = user.avatar || '👨‍🎓';
+            var navAv = document.getElementById('profile-nav-avatar');
+            if (navAv) navAv.querySelector('.user-avatar-mini').innerHTML = user.avatar ? user.avatar : '<i class="fas fa-user"></i>';
+
+            if (typeof EDU_PROGRESS_CALC !== 'undefined') {
+                var progressMap = EDU_PROGRESS_CALC.getAllSubjectsProgress(user.id, user.kelas || 7);
+                var subjectNames = { matematika: 'Matematika', ppkn: 'PPKn', indonesia: 'B. Indonesia', english: 'B. Inggris', senibudaya: 'Seni Budaya' };
+                var html = '';
+                Object.keys(progressMap).forEach(function(sid) {
+                    var pct = progressMap[sid];
+                    html += '<div class="progress-mapel"><h3>' + (subjectNames[sid] || sid) + '</h3>';
+                    html += '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%;background:var(--secondary)"></div></div>';
+                    html += '<span class="pct">' + pct + '%</span></div>';
+                });
+                document.getElementById('profile-progress-list').innerHTML = html || '<p>Belum ada progress.</p>';
+            }
+
+            if (typeof EDU_SCORE_ENGINE !== 'undefined') {
+                var stats = EDU_SCORE_ENGINE.getStatsByGameType(user.id);
+                document.getElementById('stat-quiz-battle-played').textContent = stats.quizBattle.played;
+                document.getElementById('stat-quiz-battle-best').textContent = stats.quizBattle.bestScore;
+                document.getElementById('stat-memory-played').textContent = stats.memoryMatch.played;
+                document.getElementById('stat-memory-best').textContent = stats.memoryMatch.bestTime != null ? stats.memoryMatch.bestTime + 's' : '-';
+                document.getElementById('stat-speed-played').textContent = stats.speedQuiz.played;
+                document.getElementById('stat-speed-best').textContent = stats.speedQuiz.bestScore;
+            }
+
+            if (typeof EDU_LEADERBOARD !== 'undefined') {
+                var rank = EDU_LEADERBOARD.getRankForUser(user.id, 'alltime');
+                document.getElementById('profile-ranking').textContent = rank != null ? '#' + rank : '-';
+            }
+
+            document.getElementById('btn-logout').addEventListener('click', function() {
+                if (typeof EDU_AUTH !== 'undefined') EDU_AUTH.logout();
+                window.location.href = 'login.html';
+            });
+        })();
+    </script>
 </body>
 </html>

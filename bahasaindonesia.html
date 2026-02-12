@@ -75,63 +75,15 @@
                 <p>Membaca, menulis, dan apresiasi sastra untuk Kelas 7–9</p>
             </div>
             <div class="course-content">
-                <div class="modules-list">
-                    <div class="module-item" data-module="1">
-                        <div class="module-header" onclick="toggleModule(1)">
-                            <div class="module-title"><span class="module-number">1</span><h3>Membaca Pemahaman</h3></div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-0')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Membaca teks informatif dan fiksi</span></div></div>
-                        </div>
-                    </div>
-                    <div class="module-item" data-module="2">
-                        <div class="module-header" onclick="toggleModule(2)">
-                            <div class="module-title"><span class="module-number">2</span><h3>Menulis</h3></div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-1')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Paragraf, ringkasan, dan karangan</span></div></div>
-                        </div>
-                    </div>
-                    <div class="module-item" data-module="3">
-                        <div class="module-header" onclick="toggleModule(3)">
-                            <div class="module-title"><span class="module-number">3</span><h3>Tata Bahasa</h3></div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-2')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Ejaan, imbuhan, dan kalimat efektif</span></div></div>
-                        </div>
-                    </div>
-                    <div class="module-item" data-module="4">
-                        <div class="module-header" onclick="toggleModule(4)">
-                            <div class="module-title"><span class="module-number">4</span><h3>Sastra</h3></div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-3')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Puisi, cerpen, dan drama</span></div></div>
-                        </div>
-                    </div>
-                    <div class="module-item" data-module="5">
-                        <div class="module-header" onclick="toggleModule(5)">
-                            <div class="module-title"><span class="module-number">5</span><h3>Presentasi</h3></div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('indonesia', 'lesson-4')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list"><div class="lesson-item"><span class="lesson-icon"><i class="fas fa-check-circle"></i></span><span>Berbicara di depan umum dan diskusi</span></div></div>
-                        </div>
-                    </div>
+                <div class="class-select-inline" style="margin-bottom:1rem;">
+                    <label>Kelas: </label>
+                    <select id="indonesia-class-select">
+                        <option value="7">Kelas 7</option>
+                        <option value="8">Kelas 8</option>
+                        <option value="9">Kelas 9</option>
+                    </select>
                 </div>
-                <div class="quiz-section">
-                    <h2><i class="fas fa-question-circle"></i> Kuis Bahasa Indonesia</h2>
-                    <p>Uji pemahamanmu dengan kuis singkat</p>
-                    <button class="btn-quiz" onclick="startQuiz('indonesia')"><i class="fas fa-play"></i> Mulai Kuis</button>
-                </div>
+                <div class="modules-list" id="indonesia-modules"></div>
             </div>
         </section>
     </main>
@@ -148,6 +100,15 @@
             <div id="quiz-container"></div>
         </div>
     </div>
+    <script src="data/subjects.js"></script>
+    <script src="data/materials.js"></script>
+    <script src="data/quizzes.js"></script>
+    <script src="data/progress.js"></script>
+    <script src="utils/storage.js"></script>
+    <script src="utils/auth.js"></script>
+    <script src="utils/progress-calculator.js"></script>
+    <script src="utils/mapel-page.js"></script>
     <script src="script.js"></script>
+    <script>if (typeof EDU_MAPEL_PAGE !== 'undefined') EDU_MAPEL_PAGE.render('indonesia', 'indonesia-modules', 'indonesia-class-select');</script>
 </body>
 </html>

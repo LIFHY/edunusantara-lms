@@ -149,109 +149,15 @@
             </div>
 
             <div class="course-content">
-                <div class="modules-list">
-                    <div class="module-item" data-module="1">
-                        <div class="module-header" onclick="toggleModule(1)">
-                            <div class="module-title">
-                                <span class="module-number">1</span>
-                                <h3>Bilangan Bulat</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('matematika', 'lesson-0')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Operasi bilangan bulat dan sifat-sifatnya</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-item" data-module="2">
-                        <div class="module-header" onclick="toggleModule(2)">
-                            <div class="module-title">
-                                <span class="module-number">2</span>
-                                <h3>Aljabar Dasar</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('matematika', 'lesson-1')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Bentuk aljabar, persamaan linear</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-item" data-module="3">
-                        <div class="module-header" onclick="toggleModule(3)">
-                            <div class="module-title">
-                                <span class="module-number">3</span>
-                                <h3>Geometri</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('matematika', 'lesson-2')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Bangun datar, luas, keliling, dan teorema Pythagoras</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-item" data-module="4">
-                        <div class="module-header" onclick="toggleModule(4)">
-                            <div class="module-title">
-                                <span class="module-number">4</span>
-                                <h3>Statistika</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('matematika', 'lesson-3')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Data, mean, median, modus, dan diagram</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-item" data-module="5">
-                        <div class="module-header" onclick="toggleModule(5)">
-                            <div class="module-title">
-                                <span class="module-number">5</span>
-                                <h3>Peluang</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('matematika', 'lesson-4')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Peluang kejadian sederhana</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="class-select-inline" style="margin-bottom:1rem;">
+                    <label>Kelas: </label>
+                    <select id="matematika-class-select">
+                        <option value="7">Kelas 7</option>
+                        <option value="8">Kelas 8</option>
+                        <option value="9">Kelas 9</option>
+                    </select>
                 </div>
-
-                <div class="quiz-section">
-                    <h2><i class="fas fa-question-circle"></i> Kuis Matematika</h2>
-                    <p>Uji pemahamanmu dengan kuis singkat</p>
-                    <button class="btn-quiz" onclick="startQuiz('matematika')"><i class="fas fa-play"></i> Mulai Kuis</button>
-                    <div class="quiz-result" id="math-quiz-result"></div>
-                </div>
+                <div class="modules-list" id="matematika-modules"></div>
             </div>
         </section>
     </main>
@@ -270,6 +176,115 @@
         </div>
     </div>
 
+    <script src="data/subjects.js"></script>
+    <script src="data/materials.js"></script>
+    <script src="data/quizzes.js"></script>
+    <script src="data/progress.js"></script>
+    <script src="utils/storage.js"></script>
+    <script src="utils/auth.js"></script>
+    <script src="utils/progress-calculator.js"></script>
     <script src="script.js"></script>
+    <script>
+        (function() {
+            var user = typeof EDU_AUTH !== 'undefined' ? EDU_AUTH.getCurrentUser() : null;
+            var kelas = user && user.kelas ? user.kelas : 7;
+            var classSelect = document.getElementById('matematika-class-select');
+            if (classSelect) {
+                classSelect.value = String(kelas);
+                classSelect.addEventListener('change', function() {
+                    kelas = parseInt(this.value, 10);
+                    renderMatematikaModules(kelas);
+                });
+            }
+            function renderMatematikaModules(classLevel) {
+                var container = document.getElementById('matematika-modules');
+                if (!container) return;
+                var perMateri = (typeof EDU_PROGRESS_CALC !== 'undefined' && user && EDU_PROGRESS_CALC.getProgressPerMateri)
+                    ? EDU_PROGRESS_CALC.getProgressPerMateri(user.id, 'matematika', classLevel)
+                    : [];
+                if (perMateri.length === 0 && typeof EDU_MATERIALS !== 'undefined') {
+                    var chs = EDU_MATERIALS.getChapters('matematika', classLevel);
+                    perMateri = chs.map(function(ch) {
+                        return {
+                            id: ch.id,
+                            title: ch.title,
+                            progress: 0,
+                            tryoutQuizId: ch.tryoutQuizId,
+                            tryoutDone: false,
+                            subMaterials: (ch.subMaterials || []).map(function(sm) {
+                                return { id: sm.id, title: sm.title, progress: 0, done: 0, total: (sm.quizIds || []).length, quizIds: sm.quizIds || [] };
+                            })
+                        };
+                    });
+                }
+                var html = '';
+                perMateri.forEach(function(bab, idx) {
+                    var modNum = idx + 1;
+                    html += '<div class="module-item" data-module="' + modNum + '">';
+                    html += '<div class="module-header" onclick="toggleModule(' + modNum + ')"><div class="module-title">';
+                    html += '<span class="module-number">' + modNum + '</span><h3>' + bab.title + '</h3></div>';
+                    html += '<span class="toggle-icon"><i class="fas fa-chevron-down"></i></span></div>';
+                    html += '<div class="module-content">';
+                    html += '<div class="chapter-progress-block">';
+                    html += '<h4>' + bab.title + ' <span class="chapter-pct">' + bab.progress + '%</span></h4>';
+                    (bab.subMaterials || []).forEach(function(sm) {
+                        html += '<div class="sub-materi-row">';
+                        html += '<span class="sub-title">' + sm.title + '</span>';
+                        html += '<div class="sub-bar"><div class="sub-bar-fill" style="width:' + sm.progress + '%"></div></div>';
+                        html += '<span class="sub-progress">' + sm.progress + '% (' + sm.done + '/' + sm.total + ')</span>';
+                        html += '<button type="button" class="btn-quiz-sm" onclick="openSubMaterialQuizMat(\'matematika\', [' + (sm.quizIds || []).map(function(q) { return "'" + q + "'"; }).join(',') + '])"><i class="fas fa-play"></i> Quiz</button>';
+                        html += '</div>';
+                    });
+                    html += '</div>';
+                    if (bab.tryoutQuizId) {
+                        html += '<div class="tryout-block" style="margin-top:0.75rem; padding:0.75rem; border:1px solid rgba(0,188,212,0.3); border-radius:8px;">';
+                        html += '<strong>Tryout Bab</strong> ' + (bab.tryoutDone ? '<span style="color:var(--success);"> ✓ Selesai</span>' : '');
+                        if (!bab.tryoutDone) html += ' <button type="button" class="btn-quiz-sm" onclick="openSubMaterialQuizMat(\'matematika\', [\'' + bab.tryoutQuizId + '\'])">Kerjakan Tryout</button>';
+                        html += '</div>';
+                    }
+                    html += '</div></div>';
+                });
+                container.innerHTML = html || '<p>Belum ada materi untuk kelas ini.</p>';
+            }
+            window.openSubMaterialQuizMat = function(subjectId, quizIds) {
+                if (!quizIds || quizIds.length === 0) return;
+                var modal = document.getElementById('quiz-modal');
+                var container = document.getElementById('quiz-container');
+                if (!modal || !container) return;
+                var user = typeof EDU_AUTH !== 'undefined' ? EDU_AUTH.getCurrentUser() : null;
+                var idx = 0;
+                var correctCount = 0;
+                function showNext() {
+                    if (idx >= quizIds.length) {
+                        container.innerHTML = '<div class="quiz-modal-body"><h3>Selesai!</h3><p>Benar: ' + correctCount + '/' + quizIds.length + '</p><button type="button" class="btn-course" onclick="closeQuiz()">Tutup</button></div>';
+                        var sel = document.getElementById('matematika-class-select');
+                        if (sel) renderMatematikaModules(parseInt(sel.value, 10));
+                        return;
+                    }
+                    var quizId = quizIds[idx];
+                    var q = typeof EDU_QUIZZES !== 'undefined' ? EDU_QUIZZES.getById(quizId) : null;
+                    if (!q) { idx++; showNext(); return; }
+                    container.innerHTML = '<div class="quiz-modal-body"><h4>' + q.question + '</h4><div class="quiz-options"></div></div>';
+                    var opts = container.querySelector('.quiz-options');
+                    (q.options || []).forEach(function(opt, i) {
+                        var btn = document.createElement('button');
+                        btn.className = 'btn-course';
+                        btn.style.marginRight = '8px';
+                        btn.textContent = opt;
+                        btn.onclick = function() {
+                            if (i === q.correctIndex) correctCount++;
+                            if (user && typeof EDU_PROGRESS_STORAGE !== 'undefined') EDU_PROGRESS_STORAGE.addCompletedQuiz(user.id, quizId);
+                            idx++;
+                            showNext();
+                        };
+                        opts.appendChild(btn);
+                    });
+                }
+                showNext();
+                modal.classList.add('show');
+            };
+            renderMatematikaModules(kelas);
+        })();
+    </script>
 </body>
 </html>

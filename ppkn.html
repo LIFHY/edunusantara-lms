@@ -149,109 +149,15 @@
             </div>
 
             <div class="course-content">
-                <div class="modules-list">
-                    <div class="module-item" data-module="1">
-                        <div class="module-header" onclick="toggleModule(1)">
-                            <div class="module-title">
-                                <span class="module-number">1</span>
-                                <h3>Pancasila</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('ppkn', 'lesson-0')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Nilai-nilai Pancasila dalam kehidupan sehari-hari</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-item" data-module="2">
-                        <div class="module-header" onclick="toggleModule(2)">
-                            <div class="module-title">
-                                <span class="module-number">2</span>
-                                <h3>Bhineka Tunggal Ika</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('ppkn', 'lesson-1')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Keberagaman dan persatuan Indonesia</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-item" data-module="3">
-                        <div class="module-header" onclick="toggleModule(3)">
-                            <div class="module-title">
-                                <span class="module-number">3</span>
-                                <h3>Sistem dan Dinamika Demokrasi</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('ppkn', 'lesson-2')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Demokrasi Indonesia dan partisipasi warga</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-item" data-module="4">
-                        <div class="module-header" onclick="toggleModule(4)">
-                            <div class="module-title">
-                                <span class="module-number">4</span>
-                                <h3>Hukum dan Norma</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('ppkn', 'lesson-3')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Norma, hukum nasional, dan hak asasi manusia</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="module-item" data-module="5">
-                        <div class="module-header" onclick="toggleModule(5)">
-                            <div class="module-title">
-                                <span class="module-number">5</span>
-                                <h3>Globalisasi</h3>
-                            </div>
-                            <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="module-content">
-                            <button class="btn-learn" onclick="openLesson('ppkn', 'lesson-4')"><i class="fas fa-book-open"></i> Baca Materi</button>
-                            <div class="lesson-list">
-                                <div class="lesson-item">
-                                    <span class="lesson-icon"><i class="fas fa-check-circle"></i></span>
-                                    <span>Dampak globalisasi dan hubungan internasional Indonesia</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="class-select-inline" style="margin-bottom:1rem;">
+                    <label>Kelas: </label>
+                    <select id="ppkn-class-select">
+                        <option value="7">Kelas 7</option>
+                        <option value="8">Kelas 8</option>
+                        <option value="9">Kelas 9</option>
+                    </select>
                 </div>
-
-                <div class="quiz-section">
-                    <h2><i class="fas fa-question-circle"></i> Kuis PPKn</h2>
-                    <p>Uji pemahamanmu tentang materi PPKn</p>
-                    <button class="btn-quiz" onclick="startQuiz('ppkn')"><i class="fas fa-play"></i> Mulai Kuis</button>
-                    <div class="quiz-result" id="ppkn-quiz-result"></div>
-                </div>
+                <div class="modules-list" id="ppkn-modules"></div>
             </div>
         </section>
     </main>
@@ -270,6 +176,15 @@
         </div>
     </div>
 
+    <script src="data/subjects.js"></script>
+    <script src="data/materials.js"></script>
+    <script src="data/quizzes.js"></script>
+    <script src="data/progress.js"></script>
+    <script src="utils/storage.js"></script>
+    <script src="utils/auth.js"></script>
+    <script src="utils/progress-calculator.js"></script>
+    <script src="utils/mapel-page.js"></script>
     <script src="script.js"></script>
+    <script>if (typeof EDU_MAPEL_PAGE !== 'undefined') EDU_MAPEL_PAGE.render('ppkn', 'ppkn-modules', 'ppkn-class-select');</script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduNusantara - Fun Games</title>
+    <title>Fun Games - EduNusantara LMS</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -21,127 +21,389 @@
             </div>
             <ul class="nav-main-menu">
                 <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                <li><a href="matematika.html" class="nav-link"><i class="fas fa-calculator"></i><span>Matematika</span></a></li>
-                <li><a href="ppkn.html" class="nav-link"><i class="fas fa-landmark"></i><span>PPKn</span></a></li>
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-book-open"></i>
+                        <span>Mata Pelajaran</span>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu mega-menu">
+                        <div class="mega-menu-header">
+                            <h4><i class="fas fa-book-open"></i> Pilih Mata Pelajaran</h4>
+                        </div>
+                        <div class="mega-menu-grid">
+                            <div class="subject-column">
+                                <a href="matematika.html" class="subject-item math">
+                                    <i class="fas fa-calculator"></i>
+                                    <div class="subject-info">
+                                        <span class="subject-name">Matematika</span>
+                                        <div class="subject-progress">
+                                            <div class="progress-bar"><div class="progress-fill" id="nav-math-progress"></div></div>
+                                            <span class="progress-text" id="nav-math-percent">0%</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="bahasaindonesia.html" class="subject-item indonesia">
+                                    <i class="fas fa-book"></i>
+                                    <div class="subject-info">
+                                        <span class="subject-name">B. Indonesia</span>
+                                        <div class="subject-progress">
+                                            <div class="progress-bar"><div class="progress-fill" id="nav-indo-progress"></div></div>
+                                            <span class="progress-text" id="nav-indo-percent">0%</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="english.html" class="subject-item english">
+                                    <i class="fas fa-language"></i>
+                                    <div class="subject-info">
+                                        <span class="subject-name">Bahasa Inggris</span>
+                                        <div class="subject-progress">
+                                            <div class="progress-bar"><div class="progress-fill" id="nav-english-progress"></div></div>
+                                            <span class="progress-text" id="nav-english-percent">0%</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="subject-column">
+                                <a href="ppkn.html" class="subject-item ppkn">
+                                    <i class="fas fa-landmark"></i>
+                                    <div class="subject-info">
+                                        <span class="subject-name">PPKn</span>
+                                        <div class="subject-progress">
+                                            <div class="progress-bar"><div class="progress-fill" id="nav-ppkn-progress"></div></div>
+                                            <span class="progress-text" id="nav-ppkn-percent">0%</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="senibudaya.html" class="subject-item seni">
+                                    <i class="fas fa-palette"></i>
+                                    <div class="subject-info">
+                                        <span class="subject-name">Seni Budaya</span>
+                                        <div class="subject-progress">
+                                            <div class="progress-bar"><div class="progress-fill" id="nav-seni-progress"></div></div>
+                                            <span class="progress-text" id="nav-seni-percent">0%</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mega-menu-footer">
+                            <button class="btn-view-all" onclick="showAllSubjects()"><i class="fas fa-eye"></i> Lihat Semua Mata Pelajaran</button>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="index.html#leaderboard-section" class="nav-link"><i class="fas fa-crown"></i><span>Leaderboard</span></a></li>
                 <li><a href="fungames.html" class="nav-link active"><i class="fas fa-gamepad"></i><span>Fun Games</span></a></li>
                 <li><a href="profile.html" class="nav-link"><i class="fas fa-user"></i><span>Profil</span></a></li>
             </ul>
             <div class="nav-actions">
+                <div class="class-selector-compact">
+                    <div class="class-display"><i class="fas fa-graduation-cap"></i><span id="current-class-display">Kelas 7</span></div>
+                    <select id="class-select" class="class-select-dropdown">
+                        <option value="7">Kelas 7</option>
+                        <option value="8">Kelas 8</option>
+                        <option value="9">Kelas 9</option>
+                    </select>
+                </div>
+                <button class="btn-notification" id="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notification-count" style="display:none;">0</span>
+                </button>
                 <button class="btn-theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
-                <div class="user-menu-mini"><div class="user-avatar-mini"><i class="fas fa-user"></i></div></div>
+                <div class="user-menu-mini">
+                    <div class="user-avatar-mini" id="user-avatar-mini"><i class="fas fa-user"></i></div>
+                </div>
             </div>
             <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
         </div>
         <div class="mobile-nav" id="mobile-nav">
-            <div class="mobile-nav-header"><h4>Menu</h4><button class="mobile-close" id="mobile-close"><i class="fas fa-times"></i></button></div>
+            <div class="mobile-nav-header">
+                <h4>Menu Navigasi</h4>
+                <button class="mobile-close" id="mobile-close"><i class="fas fa-times"></i></button>
+            </div>
             <div class="mobile-nav-content">
                 <a href="index.html" class="mobile-nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
-                <a href="matematika.html" class="mobile-nav-item"><i class="fas fa-calculator"></i><span>Matematika</span></a>
-                <a href="ppkn.html" class="mobile-nav-item"><i class="fas fa-landmark"></i><span>PPKn</span></a>
-                <a href="fungames.html" class="mobile-nav-item active"><i class="fas fa-gamepad"></i><span>Fun Games</span></a>
+                <div class="mobile-nav-dropdown">
+                    <button class="mobile-nav-item dropdown-toggle"><i class="fas fa-book-open"></i><span>Mata Pelajaran</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="mobile-dropdown-content">
+                        <a href="matematika.html" class="mobile-nav-item"><i class="fas fa-calculator"></i><span>Matematika</span></a>
+                        <a href="bahasaindonesia.html" class="mobile-nav-item"><i class="fas fa-book"></i><span>B. Indonesia</span></a>
+                        <a href="english.html" class="mobile-nav-item"><i class="fas fa-language"></i><span>B. Inggris</span></a>
+                        <a href="ppkn.html" class="mobile-nav-item"><i class="fas fa-landmark"></i><span>PPKn</span></a>
+                        <a href="senibudaya.html" class="mobile-nav-item"><i class="fas fa-palette"></i><span>Seni Budaya</span></a>
+                    </div>
+                </div>
+                <a href="index.html#leaderboard-section" class="mobile-nav-item"><i class="fas fa-crown"></i><span>Leaderboard</span></a>
                 <a href="profile.html" class="mobile-nav-item"><i class="fas fa-user"></i><span>Profil</span></a>
+                <a href="fungames.html" class="mobile-nav-item active"><i class="fas fa-gamepad"></i><span>Fun Games</span></a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <div class="notification-panel" id="notification-panel">
+        <div class="notification-header">
+            <h3>Notifikasi</h3>
+            <div class="notification-actions">
+                <button class="btn-mark-all-read" id="mark-all-read"><i class="fas fa-check-double"></i> Tandai semua sudah dibaca</button>
+                <button class="btn-close" id="close-notifications"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div class="notification-list" id="notification-list"></div>
+    </div>
+
+    <div class="modal" id="all-subjects-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-book"></i> Semua Mata Pelajaran</h2>
+                <button class="modal-close" onclick="closeAllSubjects()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="subjects-grid" id="all-subjects-grid"></div>
+            </div>
+        </div>
+    </div>
+
     <main class="main-content">
-        <section id="fun-games" class="page active">
-            <div class="page-header">
-                <h1>🎮 Fun Learning Games</h1>
-                <p>Pilih game yang ingin kamu mainkan!</p>
+        <section id="fun-games" class="fungames-page">
+            <div class="fungames-hero">
+                <h1 class="fungames-title"><i class="fas fa-gamepad"></i> Fun Learning Games</h1>
+                <p class="fungames-desc">Belajar sambil bermain — pilih mapel & kelas, lalu mainkan game edukatif.</p>
             </div>
 
-            <!-- Game Selection -->
             <div id="game-selection" class="games-section">
+                <div class="game-options-card">
+                    <h3><i class="fas fa-cog"></i> Pengaturan Game</h3>
+                    <div class="game-options-row">
+                        <div class="game-option-group">
+                            <label for="fungames-subject">Mata Pelajaran</label>
+                            <select id="fungames-subject">
+                                <option value="matematika">Matematika</option>
+                                <option value="ppkn">PPKn</option>
+                                <option value="indonesia">B. Indonesia</option>
+                                <option value="english">B. Inggris</option>
+                                <option value="senibudaya">Seni Budaya</option>
+                            </select>
+                        </div>
+                        <div class="game-option-group">
+                            <label for="fungames-class">Kelas</label>
+                            <select id="fungames-class">
+                                <option value="7">Kelas 7</option>
+                                <option value="8">Kelas 8</option>
+                                <option value="9">Kelas 9</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="games-section-title"><i class="fas fa-th-large"></i> Pilih Game</h2>
                 <div class="games-grid">
-                    <div class="game-card" onclick="startQuizBattleGame()">
-                        <div class="game-icon">🎯</div>
+                    <div class="game-card game-card-battle" data-game="quiz-battle">
+                        <div class="game-card-header">
+                            <div class="game-card-icon"><i class="fas fa-crosshairs"></i></div>
+                            <span class="game-card-badge">Vs Bot</span>
+                        </div>
                         <h3>Quiz Battle</h3>
-                        <p>Tic-tac-toe dengan pertanyaan Matematika & PPKn</p>
-                        <div class="game-stats">
-                            <span>🏆 Best: <strong id="quiz-battle-best-page">0</strong></span>
-                            <span>🎮 Played: <strong id="quiz-battle-played-page">0</strong></span>
+                        <p>Tic-tac-toe + soal. Jawab benar untuk isi kotak, kalahkan bot!</p>
+                        <div class="game-card-stats">
+                            <span><i class="fas fa-trophy"></i> Best <strong id="quiz-battle-best-page">0</strong></span>
+                            <span><i class="fas fa-play-circle"></i> Main <strong id="quiz-battle-played-page">0</strong></span>
                         </div>
-                        <button class="btn btn-game">Main Sekarang</button>
+                        <button type="button" class="btn-game">Main Sekarang</button>
                     </div>
 
-                    <div class="game-card" onclick="startMemoryMatchGame()">
-                        <div class="game-icon">🧠</div>
+                    <div class="game-card game-card-memory" data-game="memory-match">
+                        <div class="game-card-header">
+                            <div class="game-card-icon"><i class="fas fa-brain"></i></div>
+                            <span class="game-card-badge">Pasangkan</span>
+                        </div>
                         <h3>Memory Match</h3>
-                        <p>Cocokkan kartu rumus dengan jawabannya</p>
-                        <div class="game-stats">
-                            <span>⏱️ Best: <strong id="memory-best-page">-</strong></span>
-                            <span>🎮 Played: <strong id="memory-played-page">0</strong></span>
+                        <p>Cocokkan kartu: rumus–jawaban, kata–arti. Selesaikan secepat mungkin.</p>
+                        <div class="game-card-stats">
+                            <span><i class="fas fa-clock"></i> Best <strong id="memory-best-page">-</strong></span>
+                            <span><i class="fas fa-play-circle"></i> Main <strong id="memory-played-page">0</strong></span>
                         </div>
-                        <button class="btn btn-game">Main Sekarang</button>
+                        <button type="button" class="btn-game">Main Sekarang</button>
                     </div>
 
-                    <div class="game-card" onclick="startSpeedQuizGame()">
-                        <div class="game-icon">⚡</div>
+                    <div class="game-card game-card-speed" data-game="speed-quiz">
+                        <div class="game-card-header">
+                            <div class="game-card-icon"><i class="fas fa-bolt"></i></div>
+                            <span class="game-card-badge">60 detik</span>
+                        </div>
                         <h3>Speed Quiz</h3>
-                        <p>Jawab sebanyak mungkin dalam 60 detik</p>
-                        <div class="game-stats">
-                            <span>🔥 Best: <strong id="speed-best-page">0</strong></span>
-                            <span>🎮 Played: <strong id="speed-played-page">0</strong></span>
+                        <p>Jawab sebanyak mungkin dalam 60 detik. Skor dari kecepatan & akurasi.</p>
+                        <div class="game-card-stats">
+                            <span><i class="fas fa-fire"></i> Best <strong id="speed-best-page">0</strong></span>
+                            <span><i class="fas fa-play-circle"></i> Main <strong id="speed-played-page">0</strong></span>
                         </div>
-                        <button class="btn btn-game">Main Sekarang</button>
+                        <button type="button" class="btn-game">Main Sekarang</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Quiz Battle Game Area -->
-            <div id="quiz-battle-area" class="game-play-area" style="display: none;">
-                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
-                <div class="quiz-battle-container">
-                    <h2>🎯 Quiz Battle</h2>
-                    <div class="battle-info">
-                        <div>
-                            <p>Giliran:</p>
-                            <h3 id="current-turn" class="player-x">X (Kamu)</h3>
+            <div id="quiz-battle-area" class="game-play-area" style="display:none;">
+                <div class="game-play-inner">
+                    <button type="button" class="btn-back" onclick="backToGameSelection()"><i class="fas fa-arrow-left"></i> Kembali</button>
+                    <div class="game-play-card">
+                        <h2><i class="fas fa-crosshairs"></i> Quiz Battle</h2>
+                        <div class="battle-info">
+                            <div class="battle-info-item">
+                                <span class="label">Giliran</span>
+                                <span id="current-turn" class="value">X (Kamu)</span>
+                            </div>
+                            <div class="battle-info-item">
+                                <span class="label">Skor</span>
+                                <span id="battle-score" class="value">0 - 0</span>
+                            </div>
                         </div>
-                        <div>
-                            <p>Score:</p>
-                            <h3 id="battle-score">0 - 0</h3>
-                        </div>
+                        <div class="tic-tac-toe-board" id="battle-board"></div>
+                        <div id="battle-question-area" class="battle-question-area"></div>
+                        <div id="battle-result-area"></div>
                     </div>
-                    <div class="tic-tac-toe-board" id="battle-board"></div>
-                    <div id="battle-question-area"></div>
-                    <div id="battle-result-area"></div>
                 </div>
             </div>
 
-            <!-- Memory Match Game Area -->
-            <div id="memory-match-area" class="game-play-area" style="display: none;">
-                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
-                <div class="memory-game-container">
-                    <h2>🧠 Memory Match</h2>
-                    <div class="memory-stats">
-                        <div>⏱️ Waktu<br><strong id="memory-timer-display">0s</strong></div>
-                        <div>🎯 Moves<br><strong id="memory-moves-display">0</strong></div>
-                        <div>✅ Matched<br><strong id="memory-matched-display">0/8</strong></div>
+            <div id="memory-match-area" class="game-play-area" style="display:none;">
+                <div class="game-play-inner">
+                    <button type="button" class="btn-back" onclick="backToGameSelection()"><i class="fas fa-arrow-left"></i> Kembali</button>
+                    <div class="game-play-card">
+                        <h2><i class="fas fa-brain"></i> Memory Match</h2>
+                        <div class="memory-stats">
+                            <div class="memory-stat"><span class="label">Waktu</span><strong id="memory-timer-display">0s</strong></div>
+                            <div class="memory-stat"><span class="label">Moves</span><strong id="memory-moves-display">0</strong></div>
+                            <div class="memory-stat"><span class="label">Matched</span><strong id="memory-matched-display">0/8</strong></div>
+                        </div>
+                        <div class="memory-board" id="memory-board"></div>
                     </div>
-                    <div class="memory-board" id="memory-board"></div>
                 </div>
             </div>
 
-            <!-- Speed Quiz Game Area -->
-            <div id="speed-quiz-area" class="game-play-area" style="display: none;">
-                <button class="btn btn-back" onclick="backToGameSelection()">← Kembali</button>
-                <div class="speed-quiz-container">
-                    <h2>⚡ Speed Quiz</h2>
-                    <div class="speed-timer" id="speed-timer-display">60s</div>
-                    <div class="speed-score">
-                        <div>💯 Score<br><strong id="speed-score-display">0</strong></div>
-                        <div>✅ Benar<br><strong id="speed-correct-display">0</strong></div>
-                        <div>❌ Salah<br><strong id="speed-wrong-display">0</strong></div>
+            <div id="speed-quiz-area" class="game-play-area" style="display:none;">
+                <div class="game-play-inner">
+                    <button type="button" class="btn-back" onclick="backToGameSelection()"><i class="fas fa-arrow-left"></i> Kembali</button>
+                    <div class="game-play-card">
+                        <h2><i class="fas fa-bolt"></i> Speed Quiz</h2>
+                        <div class="speed-timer" id="speed-timer-display">60s</div>
+                        <div class="speed-stats">
+                            <div class="speed-stat"><span class="label">Skor</span><strong id="speed-score-display">0</strong></div>
+                            <div class="speed-stat"><span class="label">Benar</span><strong id="speed-correct-display">0</strong></div>
+                            <div class="speed-stat"><span class="label">Salah</span><strong id="speed-wrong-display">0</strong></div>
+                        </div>
+                        <div id="speed-question-area" class="speed-question-area"></div>
                     </div>
-                    <div id="speed-question-area"></div>
                 </div>
             </div>
         </section>
     </main>
 
+    <script src="data/subjects.js"></script>
+    <script src="data/materials.js"></script>
+    <script src="data/quizzes.js"></script>
+    <script src="data/leaderboard.js"></script>
+    <script src="utils/storage.js"></script>
+    <script src="utils/auth.js"></script>
+    <script src="utils/score-engine.js"></script>
+    <script src="games/bot-engine.js"></script>
+    <script src="games/quiz-battle.js"></script>
+    <script src="games/memory-match.js"></script>
+    <script src="games/speed-quiz.js"></script>
     <script src="script.js"></script>
+    <script>
+        if (typeof EDU_AUTH !== 'undefined' && !EDU_AUTH.isLoggedIn()) {
+            window.location.replace('login.html?return=' + encodeURIComponent(window.location.href));
+        }
+        (function() {
+            var user = typeof EDU_AUTH !== 'undefined' ? EDU_AUTH.getCurrentUser() : null;
+            if (user) {
+                var d = document.getElementById('current-class-display');
+                if (d) d.textContent = 'Kelas ' + (user.kelas || 7);
+                var s = document.getElementById('class-select');
+                if (s) s.value = String(user.kelas || 7);
+                var av = document.getElementById('user-avatar-mini');
+                if (av) av.innerHTML = user.avatar || '<i class="fas fa-user"></i>';
+            }
+            function getGameOptions() {
+                var subject = (document.getElementById('fungames-subject') && document.getElementById('fungames-subject').value) || 'matematika';
+                var classLevel = parseInt((document.getElementById('fungames-class') && document.getElementById('fungames-class').value) || '7', 10);
+                return { subjectId: subject, classLevel: classLevel };
+            }
+            function startQuizBattleGame() {
+                var opt = getGameOptions();
+                document.getElementById('game-selection').style.display = 'none';
+                document.getElementById('quiz-battle-area').style.display = 'block';
+                document.getElementById('memory-match-area').style.display = 'none';
+                document.getElementById('speed-quiz-area').style.display = 'none';
+                if (typeof EDU_QUIZ_BATTLE !== 'undefined') EDU_QUIZ_BATTLE.start(opt);
+            }
+            function startMemoryMatchGame() {
+                var opt = getGameOptions();
+                document.getElementById('game-selection').style.display = 'none';
+                document.getElementById('quiz-battle-area').style.display = 'none';
+                document.getElementById('memory-match-area').style.display = 'block';
+                document.getElementById('speed-quiz-area').style.display = 'none';
+                if (typeof EDU_MEMORY_MATCH !== 'undefined') EDU_MEMORY_MATCH.start(opt);
+            }
+            function startSpeedQuizGame() {
+                var opt = getGameOptions();
+                document.getElementById('game-selection').style.display = 'none';
+                document.getElementById('quiz-battle-area').style.display = 'none';
+                document.getElementById('memory-match-area').style.display = 'none';
+                document.getElementById('speed-quiz-area').style.display = 'block';
+                if (typeof EDU_SPEED_QUIZ !== 'undefined') EDU_SPEED_QUIZ.start(opt);
+            }
+            function backToGameSelection() {
+                document.getElementById('game-selection').style.display = 'block';
+                document.getElementById('quiz-battle-area').style.display = 'none';
+                document.getElementById('memory-match-area').style.display = 'none';
+                document.getElementById('speed-quiz-area').style.display = 'none';
+                updateFunGamesStats();
+            }
+            function updateFunGamesStats() {
+                var u = typeof EDU_AUTH !== 'undefined' ? EDU_AUTH.getCurrentUser() : null;
+                if (!u || typeof EDU_SCORE_ENGINE === 'undefined') return;
+                var st = EDU_SCORE_ENGINE.getStatsByGameType(u.id);
+                var el;
+                if (el = document.getElementById('quiz-battle-best-page')) el.textContent = st.quizBattle.bestScore;
+                if (el = document.getElementById('quiz-battle-played-page')) el.textContent = st.quizBattle.played;
+                if (el = document.getElementById('memory-best-page')) el.textContent = st.memoryMatch.bestTime != null ? st.memoryMatch.bestTime + 's' : '-';
+                if (el = document.getElementById('memory-played-page')) el.textContent = st.memoryMatch.played;
+                if (el = document.getElementById('speed-best-page')) el.textContent = st.speedQuiz.bestScore;
+                if (el = document.getElementById('speed-played-page')) el.textContent = st.speedQuiz.played;
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                var classSelect = document.getElementById('class-select');
+                var fungamesClass = document.getElementById('fungames-class');
+                if (user && fungamesClass) fungamesClass.value = String(user.kelas || 7);
+                if (classSelect) {
+                    classSelect.addEventListener('change', function() {
+                        if (fungamesClass) fungamesClass.value = this.value;
+                    });
+                }
+                if (fungamesClass && classSelect) {
+                    fungamesClass.addEventListener('change', function() {
+                        classSelect.value = this.value;
+                        var d = document.getElementById('current-class-display');
+                        if (d) d.textContent = 'Kelas ' + this.value;
+                    });
+                }
+                updateFunGamesStats();
+                document.querySelectorAll('.game-card').forEach(function(card) {
+                    var btn = card.querySelector('.btn-game');
+                    var g = card.dataset.game;
+                    if (!btn) return;
+                    if (g === 'quiz-battle') btn.addEventListener('click', startQuizBattleGame);
+                    else if (g === 'memory-match') btn.addEventListener('click', startMemoryMatchGame);
+                    else if (g === 'speed-quiz') btn.addEventListener('click', startSpeedQuizGame);
+                });
+                if (typeof EDU_QUIZ_BATTLE !== 'undefined') EDU_QUIZ_BATTLE.setOnGameEnd(function() { setTimeout(updateFunGamesStats, 500); });
+                if (typeof EDU_MEMORY_MATCH !== 'undefined') EDU_MEMORY_MATCH.setOnGameEnd(function() { setTimeout(updateFunGamesStats, 500); });
+                if (typeof EDU_SPEED_QUIZ !== 'undefined') EDU_SPEED_QUIZ.setOnGameEnd(function() { setTimeout(updateFunGamesStats, 500); });
+            });
+            window.startQuizBattleGame = startQuizBattleGame;
+            window.startMemoryMatchGame = startMemoryMatchGame;
+            window.startSpeedQuizGame = startSpeedQuizGame;
+            window.backToGameSelection = backToGameSelection;
+        })();
+    </script>
 </body>
 </html>

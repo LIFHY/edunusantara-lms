@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduNusantara LMS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-logo">
+                <div class="logo-icon"><i class="fas fa-book-open"></i></div>
+                <h1>Edu<span class="logo-highlight">Nusantara</span></h1>
+                <p>Platform Pembelajaran SMP</p>
+            </div>
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" placeholder="Masukkan nama" required>
+                </div>
+                <div class="form-group">
+                    <label for="kelas">Kelas</label>
+                    <select id="kelas" name="kelas" required>
+                        <option value="7">Kelas 7</option>
+                        <option value="8">Kelas 8</option>
+                        <option value="9">Kelas 9</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Pilih Avatar</label>
+                    <div class="login-avatar-options" id="avatar-options"></div>
+                    <input type="hidden" id="avatar" name="avatar" value="">
+                </div>
+                <button type="submit" class="btn-login"><i class="fas fa-sign-in-alt"></i> Masuk ke Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="data/users.js"></script>
+    <script src="utils/storage.js"></script>
+    <script src="utils/auth.js"></script>
+    <script>
+        (function () {
+            var avatars = typeof EDU_USERS !== 'undefined' ? EDU_USERS.getAvatarOptions() : ['\uD83D\uDC68\u200D\uD83C\uDF93', '\uD83D\uDC69\u200D\uD83C\uDF93', '\uD83E\uDDD1\u200D\uD83C\uDF93', '\uD83D\uDE0A', '\uD83C\uDF1F', '\uD83D\uDCDA', '\uD83C\uDFAF', '\uD83C\uDFC6'];
+            var container = document.getElementById('avatar-options');
+            var input = document.getElementById('avatar');
+            if (input && avatars.length) input.value = avatars[0];
+            avatars.forEach(function (av, i) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = av;
+                if (i === 0) btn.classList.add('selected');
+                btn.addEventListener('click', function () {
+                    container.querySelectorAll('button').forEach(function (b) { b.classList.remove('selected'); });
+                    btn.classList.add('selected');
+                    input.value = av;
+                });
+                container.appendChild(btn);
+            });
+
+            document.getElementById('login-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                var nama = document.getElementById('nama').value.trim();
+                var kelas = parseInt(document.getElementById('kelas').value, 10);
+                var avatar = document.getElementById('avatar').value || avatars[0];
+                var user = { id: 'user_' + Date.now(), nama: nama, kelas: kelas, avatar: avatar, createdAt: new Date().toISOString() };
+                if (typeof EDU_AUTH !== 'undefined') {
+                    EDU_AUTH.setCurrentUser(user);
+                } else {
+                    localStorage.setItem('edunusantara_current_user', JSON.stringify(user));
+                }
+                var returnUrl = new URLSearchParams(window.location.search).get('return');
+                window.location.href = returnUrl || 'index.html';
+            });
+        })();
+    </script>
+</body>
+</html>
